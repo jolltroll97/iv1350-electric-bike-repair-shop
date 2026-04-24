@@ -17,13 +17,13 @@ public class OrderHandler {
         // Update order state to "Accepted" and persist
         RepairOrderDTO acceptedOrder = createUpdatedOrder(selectedRepairOrder, "Accepted");
         printer.printRepairOrder(acceptedOrder);
-        repairOrderRegistry.updateRepairOrder(acceptedOrder);
+        repairOrderRegistry.updateRepairOrderState(acceptedOrder, "Accepted");
     }
 
     public void orderRejected(RepairOrderDTO selectedRepairOrder) {
         // Update order state to "Rejected" and persist
         RepairOrderDTO rejectedOrder = createUpdatedOrder(selectedRepairOrder, "Rejected");
-        repairOrderRegistry.updateRepairOrder(rejectedOrder);
+        repairOrderRegistry.updateRepairOrderState(rejectedOrder, "Rejected");
     }
 
     private RepairOrderDTO createUpdatedOrder(RepairOrderDTO order, String newState) {

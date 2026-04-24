@@ -13,7 +13,7 @@ public class RepairOrderRegistry{
         /* Constructor, vet ej vad som ska vara i */
     }
 
-    public void createRepairOrder(CustomerDTO customer, int date, String repairReport){
+    public int createRepairOrder(CustomerDTO customer, int date, String repairReport){
 
         RepairOrderDTO currentRepairOrder = new RepairOrderDTO(
             null,
@@ -24,10 +24,10 @@ public class RepairOrderRegistry{
             customer,
             repairId
 
-        )
+        );
 
         repairOrders.add(currentRepairOrder);
-        repairId++;
+        return repairId++;
   
     }
 
@@ -36,7 +36,7 @@ public class RepairOrderRegistry{
         List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO searchRepairOrders : repairOrders){
-            if(searchRepairOrders.getState() == "Awaiting Diagnostic"){
+            if(searchRepairOrders.getState().equals(state)){
                 stateListRepairOrders.add(searchRepairOrders);
             }
 
@@ -58,16 +58,21 @@ public class RepairOrderRegistry{
 
         }
 
-
     }
        
-    public void updateRepairOrderState(RepairOrderDTO selectedRepairOrder){
+    public void updateRepairOrderState(RepairOrderDTO selectedRepairOrder, String newState){
 
-        for(RepairOrderDTO updateState : repairOrders){
+        RepairOrderDTO updatedOrder = new RepairOrderDTO(
+            selectedRepairOrder.getReportDTO(),
+            selectedRepairOrder.getDate(),
+            selectedRepairOrder.getTotalCost(),
+            selectedRepairOrder.getRepairReport(),
+            newState, 
+            selectedRepairOrder.getCustomer(),
+            selectedRepairOrder.getRepairId()
+        );
 
-
-            
-        }
+        updateRepairOrderDiagnostic(updatedOrder);
 
     }
 
@@ -98,7 +103,5 @@ public class RepairOrderRegistry{
         return foundRepairOrders;
 
     }
-
-
 
 }
