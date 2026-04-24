@@ -6,7 +6,7 @@ import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
  */
 public class Printer {
 
-    Printer(){
+    public Printer(){
         /* Constructor, vet ej vad som ska vara i */
     }
 
