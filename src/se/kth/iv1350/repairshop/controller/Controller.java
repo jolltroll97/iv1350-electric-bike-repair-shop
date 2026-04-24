@@ -9,7 +9,7 @@ import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 
-import se.kth.iv1350.repairshop.model.OrderHandler;
+import se.kth.iv1350.repairshop.model.DiagnosticReport;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -80,9 +80,25 @@ public class Controller {
      * @param repairOrderId The ID number used to identify the correct repair order in the registry.
      */
     public DiagnosticReportDTO addDiagnosticReport(RepairTaskDTO repairTask, int repairOrderId){
-        /**
-         * No code yet.
-         */
+        
+        // Fetch the correct data using the current ID
+        RepairOrderDTO orderDTO = this.repairOrderRegistry.getById(repairOrderId);
+       
+        // Extract the diagnostic report
+        DiagnosticReportDTO existingReportDTO = orderDTO.getReportDTO();
+
+        // Build the object
+        DiagnosticReport reportModel = new DiagnosticReport(existingReportDTO);
+
+        // Call add to list
+        List<RepairTaskDTO> currentTasks = reportModel.addToList(repairTask, orderDTO);
+
+        int totalTime = reportModel.calculateTotalTime(currentTasks);
+
+        DiagnosticReportDTO updatedReportDTO = new DiagnosticReportDTO(currentTasks, totalTime);
+
+        return updatedReportDTO;
+
     }
     
     /**
