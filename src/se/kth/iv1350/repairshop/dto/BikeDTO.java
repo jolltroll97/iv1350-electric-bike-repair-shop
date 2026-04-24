@@ -1,12 +1,12 @@
 package se.kth.iv1350.repairshop.dto;
 
-public class BikeDTO{
-    private final String brand;
-    private final String model;
-    private final String serialNum;
+public class BikeDTO {
 
-   
-    public BikeDTO(String brand, String model, String serialNum) {
+    private String brand;
+    private String model;
+    private String serialNum;
+
+    public BikeDTO(String brand, String model, String serialNum){
         this.brand = brand;
         this.model = model;
         this.serialNum = serialNum;

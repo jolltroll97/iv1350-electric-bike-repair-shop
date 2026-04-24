@@ -8,6 +8,12 @@ public class Printer {
     }
 
     public void printRepairOrder(RepairOrderDTO selectedRepairOrder){
+    System.out.println("------------------------------------");
+    System.out.println("           REPAIR ORDER             ");
+    System.out.println("------------------------------------");
+
+    System.out.println(": " + selectedRepairOrder.toString());
+
 
     }
 
