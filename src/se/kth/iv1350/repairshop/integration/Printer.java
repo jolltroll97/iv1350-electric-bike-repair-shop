@@ -12,7 +12,10 @@ public class Printer {
     System.out.println("           REPAIR ORDER             ");
     System.out.println("------------------------------------");
 
-    System.out.println(": " + selectedRepairOrder.toString());
+    System.out.println("Repair order: " + selectedRepairOrder.toString());
+
+    System.out.println(" ");
+    System.out.println("------------------------------------");
 
 
     }

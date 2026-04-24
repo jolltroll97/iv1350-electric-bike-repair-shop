@@ -15,4 +15,16 @@ public class BikeDTO {
     public String getBrand() { return brand; }
     public String getModel() { return model; }
     public String getSerialNum() { return serialNum; }
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+
+            builder.append("Brand: ").append(brand).append("\n")
+                    .append("Model: ").append(model).append("\n")
+                    .append("Serial number: ").append(serialNum).append("\n");
+
+        return builder.toString();
+    }
+
 }
