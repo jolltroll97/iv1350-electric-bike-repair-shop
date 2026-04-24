@@ -31,14 +31,15 @@ public class Controller {
     }
 
     /**
+     * Calls the integration layer to do the following task:
      * Retrieves customer info by searching for their phone number.
+     * The actual searching logic is done in the integration layer.
      * 
      * @param phoneNum      The customers phone number.
      */
     public CustomerDTO retrieveCustomerInfo(int phoneNum){
-        /**
-         * No code yet.
-         */
+
+        return this.customerRegistry.findCustomer(phoneNum);
     }
 
     /**
