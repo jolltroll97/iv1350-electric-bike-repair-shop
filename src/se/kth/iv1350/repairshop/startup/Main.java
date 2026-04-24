@@ -1,6 +1,7 @@
 package se.kth.iv1350.repairshop.startup;
 
 import se.kth.iv1350.repairshop.integration.RegistryCreator;
+import se.kth.iv1350.repairshop.integration.Printer;
 import se.kth.iv1350.repairshop.controller.Controller;
 import se.kth.iv1350.repairshop.view.View;
 
@@ -13,7 +14,9 @@ public class Main {
     public static void main(String[] args) {
         RegistryCreator creator = new RegistryCreator();
 
-        Controller contr = new Controller(creator);
+        Printer printer = new Printer();
+
+        Controller contr = new Controller(creator, printer);
 
         View view = new View(contr);
 

@@ -11,6 +11,7 @@ import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 
 import se.kth.iv1350.repairshop.model.DiagnosticReport;
 import se.kth.iv1350.repairshop.model.OrderHandler;
+import se.kth.iv1350.repairshop.integration.Printer;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Controller {
 
     private final CustomerRegistry customerRegistry;
     private final RepairOrderRegistry repairOrderRegistry;
-    private final OrderHandler OrderHandler;
+    private final OrderHandler orderHandler;
 
     private int currentRepairOrder;
 
@@ -29,10 +30,10 @@ public class Controller {
      * @param creator       Used to get the classes that handle the database calls.
      */
 
-    public Controller(RegistryCreator creator){
+    public Controller(RegistryCreator creator, Printer printer){
         this.customerRegistry = creator.getCustomerRegistry();
         this.repairOrderRegistry = creator.getRepairOrderRegistry();
-
+        this.orderHandler = new OrderHandler(printer, this.repairOrderRegistry);
     }   
 
     /**
@@ -92,7 +93,10 @@ public class Controller {
         DiagnosticReport reportModel = new DiagnosticReport(existingReportDTO);
 
         // Call add to list
-        List<RepairTaskDTO> currentTasks = reportModel.addToList(repairTask, orderDTO);
+        reportModel.addToList(repairTask);
+
+        // Get the updated list
+        ArrayList<RepairTaskDTO> currentTasks = reportModel.getRepairTasksList();
 
         int totalTime = reportModel.calculateTotalTime(currentTasks);
 
@@ -110,9 +114,23 @@ public class Controller {
      * @param repairOrderId The ID of the repair report that is to be updated.              
      */
     public void updateRepairOrder(DiagnosticReportDTO reportDTO, int repairOrderId){
-        /**
-         * No code yet.
-         */
+        // 1. Fetch the outdated order from the database
+        RepairOrderDTO oldOrder = this.repairOrderRegistry.getById(repairOrderId);
+        
+        // 2. Create a brand-new DTO. We copy all the old details,
+        // except the DiagnosticReportDTO (that is updated).
+        RepairOrderDTO updatedOrder = new RepairOrderDTO(
+            reportDTO,
+            oldOrder.getDate(),
+            oldOrder.getTotalCost(), 
+            oldOrder.getRepairReport(),
+            oldOrder.getState(),
+            oldOrder.getCustomer(),
+            oldOrder.getRepairId()
+        );
+        
+        // Update the database
+        this.repairOrderRegistry.updateRepairOrderDiagnostic(updatedOrder);
     }
 
     /**
@@ -148,10 +166,10 @@ public class Controller {
     public void customerResponse(boolean response, RepairOrderDTO selectedRepairOrder){
       
         if(response == true){
-            OrderHandler.orderAccepted(selectedRepairOrder);
+            orderHandler.orderAccepted(selectedRepairOrder);
         }
         else{
-            OrderHandler.orderRejected(selectedRepairOrder);
+            orderHandler.orderRejected(selectedRepairOrder);
         }
     }
 }

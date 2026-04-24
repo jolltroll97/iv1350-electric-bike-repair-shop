@@ -1,33 +1,25 @@
 package se.kth.iv1350.repairshop.model;
 import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
-import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import java.util.ArrayList;
 
 
 public class DiagnosticReport {
     private ArrayList<RepairTaskDTO> repairTasksList;
     
-    public DiagnosticReport() {
-        this.repairTasksList = new ArrayList<>();
+    public DiagnosticReport(DiagnosticReportDTO existingReportDTO) {
+        // If there are no old tasks already stored, create a new arraylist
+        if (existingReportDTO == null || existingReportDTO.getRepairTasksList() == null) {
+            this.repairTasksList = new ArrayList<>();
+        } 
+        // If there are older tasks already stored, load them
+        else {
+            this.repairTasksList = new ArrayList<>(existingReportDTO.getRepairTasksList());
+        }
     }
     
-    public ArrayList<RepairTaskDTO> addToList(RepairTaskDTO repairTask, RepairOrderDTO repairOrderDTO) {
-        // If repairOrderDTO has existing repair tasks, add them first
-        if (repairOrderDTO.getReportDTO() != null && repairOrderDTO.getReportDTO().getRepairTasksList() != null) {
-            for (RepairTaskDTO existingTask : repairOrderDTO.getReportDTO().getRepairTasksList()) {
-                repairTasksList.add(existingTask);
-            }
-        } else {
-            // If no existing list, create a new empty list
-            repairTasksList = new ArrayList<>();
-        }
-        
-        // Then add the new repair task
-        repairTasksList.add(repairTask);
-        
-        // Return as ArrayList
-        return repairTasksList;
+    public void addToList(RepairTaskDTO repairTask) {
+        this.repairTasksList.add(repairTask); 
     }
     
     public int calculateTotalTime(ArrayList<RepairTaskDTO> repairTasks) {
@@ -36,5 +28,9 @@ public class DiagnosticReport {
             totalTime += task.getTime();
         }
         return totalTime;
+    }
+
+    public ArrayList<RepairTaskDTO> getRepairTasksList() {
+        return this.repairTasksList;
     }
 }
