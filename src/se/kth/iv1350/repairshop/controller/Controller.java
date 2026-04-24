@@ -50,9 +50,11 @@ public class Controller {
      * @param repairReport  Description of the repair report (receptionist enters this).
      */
     public void createRepairOrder(CustomerDTO customer, int date, String repairReport){
-        /**
-         * No code yet.
-         */
+        
+        int newOrderId = this.repairOrderRegistry.createRepairOrder(customer, date, repairReport);
+
+        this.currentRepairOrder = newOrderId;
+
     }
 
     /**
@@ -61,11 +63,9 @@ public class Controller {
      * @param state         The state that filters the returned list.
      */
     public List<RepairOrderDTO> retrieveRepairOrderList(String state){
-        /**
-         * Det borde vara en lista som returneras, eller hur?
-         * 
-         * No code yet.
-         */
+        
+        return this.repairOrderRegistry.retrieveRepairOrderList(state);
+
     }
 
     /**
