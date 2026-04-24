@@ -1,11 +1,11 @@
 package se.kth.iv1350.repairshop.integration;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
-import java.util.LinkedList; 
+import java.util.ArrayList; 
 import java.util.List;
 
 public class CustomerRegistry {
     
-    private List<CustomerDTO> customers = new LinkedList<>();
+    private List<CustomerDTO> customers = new ArrayList<>();
 
     CustomerRegistry(){
         /* Constructor, vet ej vad som ska vara i */

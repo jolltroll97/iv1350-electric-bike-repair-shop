@@ -1,12 +1,12 @@
 package se.kth.iv1350.repairshop.integration;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
-import java.util.LinkedList; 
+import java.util.ArrayList; 
 import java.util.List;
 
 public class RepairOrderRegistry{
 
-    private List<RepairOrderDTO> repairOrders = new LinkedList<>();
+    private List<RepairOrderDTO> repairOrders = new ArrayList<>();
     private int repairId = 1; /* Satte denna som 1 för vi inte vet hur många ordrar sen innan */
 
     RepairOrderRegistry(){
@@ -20,7 +20,7 @@ public class RepairOrderRegistry{
             date,
             0,
             repairReport,
-            "Newly Created", /* Osäker om detta är rätt för state */
+            "Awaiting Diagnostic", /* Osäker om detta är rätt för state */
             customer,
             repairId
 
@@ -31,36 +31,71 @@ public class RepairOrderRegistry{
   
     }
 
-    /* Ska det vara RepairDTO lista istället?? */
-    public RepairDTO retrieveRepairOrderList(String state){
+    public List<RepairOrderDTO> retrieveRepairOrderList(String state){
 
-        /* temporär return */
-        return null;
+        List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
+
+        for(RepairOrderDTO searchRepairOrders : repairOrders){
+            if(searchRepairOrders.getState() == "Awaiting Diagnostic"){
+                stateListRepairOrders.add(searchRepairOrders);
+            }
+
+        }
+        return stateListRepairOrders;
+
     }
 
-    public void updateRepairOrder(RepairOrderDTO newRepairOrder){
+    public void updateRepairOrderDiagnostic(RepairOrderDTO newRepairOrder){
+
+        for(int i = 0; i < repairOrders.size(); i++){
+
+            if(repairOrders.get(i).getRepairId() == newRepairOrder.getRepairId()){
+
+                repairOrders.set(i, newRepairOrder);
+                return;
+
+            }
+
+        }
 
 
+    }
+       
+    public void updateRepairOrderState(RepairOrderDTO selectedRepairOrder){
 
+        for(RepairOrderDTO updateState : repairOrders){
+
+
+            
+        }
 
     }
 
     public RepairOrderDTO getById(int repairOrderId){
 
+        for(RepairOrderDTO repairOrderById : repairOrders){
+            if(repairOrderById.getRepairId() == repairOrderId){
+                return repairOrderById;
+            }
+        }
+
+        return null;
         
     }
 
-    /* OBS! samma metod finns i customerRegistry men här går vi igenom
-    listan för repairOrders istället för listan med customers. Är detta duplicated code? */
     public List<RepairOrderDTO> getByPhoneNum(int phoneNum){
 
-        for(CustomerDTO customer : repairOrders){
+        List <RepairOrderDTO> foundRepairOrders = new ArrayList<>();
 
-            if(customer.getPhoneNum()== phoneNum){
-                return customer;
+        for(RepairOrderDTO customerRepairOrder : repairOrders){
+
+            if(customerRepairOrder.getCustomer().getPhoneNum() == phoneNum){
+                foundRepairOrders.add(customerRepairOrder);
             }
 
         }
+
+        return foundRepairOrders;
 
     }
 
