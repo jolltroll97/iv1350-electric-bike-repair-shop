@@ -9,6 +9,8 @@ import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 
+import se.kth.iv1350.repairshop.model.OrderHandler;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ public class Controller {
 
     private final CustomerRegistry customerRegistry;
     private final RepairOrderRegistry repairOrderRegistry;
+    private final OrderHandler OrderHandler;
 
     private int currentRepairOrder;
 
@@ -28,7 +31,8 @@ public class Controller {
     public Controller(RegistryCreator creator){
         this.customerRegistry = creator.getCustomerRegistry();
         this.repairOrderRegistry = creator.getRepairOrderRegistry();
-    }
+
+    }   
 
     /**
      * Calls the integration layer to do the following task:
@@ -111,6 +115,9 @@ public class Controller {
          * Förslag på användning:
          * List<RepairOrderDTO> dtoList = new ArrayList<>();
          */
+
+        return this.repairOrderRegistry.getByPhoneNum(phoneNum);
+
     }
 
     /**
@@ -122,8 +129,12 @@ public class Controller {
      *                              (chosen from the list returned from "getByPhoneNum")
      */
     public void customerResponse(boolean response, RepairOrderDTO selectedRepairOrder){
-        /**
-         * No code yet.
-         */
+      
+        if(response == true){
+            OrderHandler.orderAccepted(selectedRepairOrder);
+        }
+        else{
+            OrderHanorderRejected(selectedRepairOrder);
+        }
     }
 }
