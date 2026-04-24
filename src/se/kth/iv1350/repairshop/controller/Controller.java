@@ -10,6 +10,7 @@ import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 
 import se.kth.iv1350.repairshop.model.DiagnosticReport;
+import se.kth.iv1350.repairshop.model.OrderHandler;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -150,7 +151,7 @@ public class Controller {
             OrderHandler.orderAccepted(selectedRepairOrder);
         }
         else{
-            OrderHanorderRejected(selectedRepairOrder);
+            OrderHandler.orderRejected(selectedRepairOrder);
         }
     }
 }
