@@ -36,7 +36,7 @@ public class RepairOrderRegistry{
         List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO searchRepairOrders : repairOrders){
-            if(searchRepairOrders.getState().equals(state)){
+            if(searchRepairOrders.getState().equalsIgnoreCase(state)){
                 stateListRepairOrders.add(searchRepairOrders);
             }
 
