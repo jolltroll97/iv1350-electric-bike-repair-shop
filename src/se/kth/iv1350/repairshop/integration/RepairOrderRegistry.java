@@ -4,15 +4,28 @@ import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import java.util.ArrayList; 
 import java.util.List;
 
+/**
+ *  This class represents the registry for repair orders.
+ *  It is responsible for creating, retrieving and updating all repair orders. 
+ *  @param repairOrders A list that contains all the repair orders in the registry.
+ *  @param repairId An integer that is used to assign a unique ID to each repair order.
+ * 
+ */
 public class RepairOrderRegistry{
 
     private List<RepairOrderDTO> repairOrders = new ArrayList<>();
-    private int repairId = 1; /* Satte denna som 1 för vi inte vet hur många ordrar sen innan */
+    private int repairId = 1; 
 
     RepairOrderRegistry(){
         /* Constructor, vet ej vad som ska vara i */
     }
 
+    /**
+     * Creates a new repair order and adds it to the registry. 
+     * @param customer The customer who owns the bike (with bike information) that needs to be repaired.
+     * @param date The date when the repair order was created.
+     * @param repairReport A description of the issues with the bike (as provided by the customer).
+     */
     public int createRepairOrder(CustomerDTO customer, int date, String repairReport){
 
         RepairOrderDTO currentRepairOrder = new RepairOrderDTO(
@@ -20,7 +33,7 @@ public class RepairOrderRegistry{
             date,
             0,
             repairReport,
-            "Awaiting Diagnostic", /* Osäker om detta är rätt för state */
+            "Awaiting Diagnostic", 
             customer,
             repairId
 
@@ -31,12 +44,16 @@ public class RepairOrderRegistry{
   
     }
 
+    /**
+     * Retrieves a list of repair orders that are in a specific state.
+     * @param state The state of the repair orders to retrieve (e.g. "Awaiting Diagnostic").
+     */
     public List<RepairOrderDTO> retrieveRepairOrderList(String state){
 
         List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO searchRepairOrders : repairOrders){
-            if(searchRepairOrders.getState().equals(state)){
+            if(searchRepairOrders.getState().equalsIgnoreCase(state)){
                 stateListRepairOrders.add(searchRepairOrders);
             }
 
@@ -45,6 +62,10 @@ public class RepairOrderRegistry{
 
     }
 
+    /**
+     * Updates the diagnostic report of a specific repair order. 
+     * @param newRepairOrder The repair order with the updated diagnostic report.
+     */
     public void updateRepairOrderDiagnostic(RepairOrderDTO newRepairOrder){
 
         for(int i = 0; i < repairOrders.size(); i++){
@@ -52,7 +73,6 @@ public class RepairOrderRegistry{
             if(repairOrders.get(i).getRepairId() == newRepairOrder.getRepairId()){
 
                 repairOrders.set(i, newRepairOrder);
-                return;
 
             }
 
@@ -60,6 +80,11 @@ public class RepairOrderRegistry{
 
     }
        
+    /**
+     * Updates the state of a specific repair order.
+     * @param selectedRepairOrder The repair order to update.
+     * @param newState The new state to set for the repair order (e.g. "Accepted", "Rejected").
+     */
     public void updateRepairOrderState(RepairOrderDTO selectedRepairOrder, String newState){
 
         RepairOrderDTO updatedOrder = new RepairOrderDTO(
@@ -76,6 +101,10 @@ public class RepairOrderRegistry{
 
     }
 
+    /**
+     * Retrieves a repair order by its ID.
+     * @param repairOrderId The unique ID of the repair order to retrieve.
+     */
     public RepairOrderDTO getById(int repairOrderId){
 
         for(RepairOrderDTO repairOrderById : repairOrders){
@@ -88,6 +117,11 @@ public class RepairOrderRegistry{
         
     }
 
+    /**
+     * Retrieves a list of repair orders consisting of every repair order created for specific customer.
+     * @param phoneNum The phone number to search for (associated with the customer of the repair orders).
+     * @return A list of repair orders associated with the provided phone number.
+     */
     public List<RepairOrderDTO> getByPhoneNum(int phoneNum){
 
         List <RepairOrderDTO> foundRepairOrders = new ArrayList<>();
