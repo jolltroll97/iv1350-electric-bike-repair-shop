@@ -23,4 +23,11 @@ public class DiagnosticReportDTO {
     public void setRepairTasksList(RepairTaskDTO[] repairTasksList) {
         this.repairTasksList = repairTasksList;
     }
+    
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Repair Tasks: ").append(repairTasksList.length)
+               .append(" tasks, Total Time: ").append(totalTime).append(" minutes");
+        return builder.toString();
+    }
 }
