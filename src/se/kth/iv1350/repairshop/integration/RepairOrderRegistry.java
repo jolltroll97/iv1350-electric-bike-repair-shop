@@ -14,12 +14,20 @@ import java.util.List;
 public class RepairOrderRegistry{
 
     private List<RepairOrderDTO> repairOrders = new ArrayList<>();
-    private int repairId = 6; 
+    private int repairId = 4; 
 
-    RepairOrderRegistry(){
-        this.repairOrders.add(new RepairOrderDTO(""));
-        this.repairOrders.add(new RepairOrderDTO(""));
-        this.repairOrders.add(new RepairOrderDTO(""));
+    public RepairOrderRegistry(){
+        /**
+         * Fake customer data since there is no database to pull from
+         */
+        
+        CustomerDTO customerOne = new CustomerDTO("Douglas Andersson", 701234566, "douglas.andersson0@gmail.com", null);
+        CustomerDTO customerTwo = new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", null);
+        CustomerDTO customerThree = new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", null);
+        
+        this.repairOrders.add(new RepairOrderDTO(null, 20260426, 10250, "Det mesta behöver bytas", "Newly created", customerOne, 1));
+        this.repairOrders.add(new RepairOrderDTO(null, 20260427, 1650, "Punktering, rostiga bromsar", "Newly created", customerTwo, 2));
+        this.repairOrders.add(new RepairOrderDTO(null, 20260428, 3550, "Rullar dåligt, kan vara kullagerna", "Ready for approval", customerThree, 3));
     }
 
     /**
