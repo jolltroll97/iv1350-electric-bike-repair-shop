@@ -10,8 +10,10 @@ public class CustomerRegistry {
     
     private List<CustomerDTO> customers = new ArrayList<>();
 
-    CustomerRegistry(){
-        /* Constructor, vet ej vad som ska vara i */
+    public CustomerRegistry(){
+        this.customers.add(new CustomerDTO("Douglas Andersson", 701234566, "douglas.andersson0@gmail.com", null));
+        this.customers.add(new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", null));
+        this.customers.add(new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", null));
     }
 
     /**
