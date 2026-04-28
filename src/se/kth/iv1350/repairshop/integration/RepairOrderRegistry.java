@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RepairOrderRegistry{
 
-    private List<RepairOrderDTO> repairOrders = new ArrayList<>();
+    private ArrayList<RepairOrderDTO> repairOrders = new ArrayList<>();
     private int repairId = 4; 
 
     public RepairOrderRegistry(){
@@ -64,9 +64,9 @@ public class RepairOrderRegistry{
      * Retrieves a list of repair orders that are in a specific state.
      * @param state The state of the repair orders to retrieve (e.g. "Awaiting Diagnostic").
      */
-    public List<RepairOrderDTO> retrieveRepairOrderList(String state){
+    public ArrayList<RepairOrderDTO> retrieveRepairOrderList(String state){
 
-        List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
+        ArrayList<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO searchRepairOrders : repairOrders){
             if(searchRepairOrders.getState().equalsIgnoreCase(state)){
@@ -138,9 +138,9 @@ public class RepairOrderRegistry{
      * @param phoneNum The phone number to search for (associated with the customer of the repair orders).
      * @return A list of repair orders associated with the provided phone number.
      */
-    public List<RepairOrderDTO> getByPhoneNum(int phoneNum){
+    public ArrayList<RepairOrderDTO> getByPhoneNum(int phoneNum){
 
-        List <RepairOrderDTO> foundRepairOrders = new ArrayList<>();
+        ArrayList <RepairOrderDTO> foundRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO customerRepairOrder : repairOrders){
 
