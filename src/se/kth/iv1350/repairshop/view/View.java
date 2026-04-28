@@ -1,6 +1,13 @@
 package se.kth.iv1350.repairshop.view;
 
 import se.kth.iv1350.repairshop.controller.Controller;
+import se.kth.iv1350.repairshop.dto.BikeDTO;
+import se.kth.iv1350.repairshop.dto.CustomerDTO;
+import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
+import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
+import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
+
+import java.util.List;
 
 /**
  * Placeholder for the real view.
@@ -24,8 +31,9 @@ public class View {
      * Performs fake user executions.
      */
     public void sampleExecution() {
-        /**
-         * No code yet.
-         */
+        System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
+        
+        // Customer walks in, and talks to the receptionist (Workflow points 1-6)
+        
     }
 }
