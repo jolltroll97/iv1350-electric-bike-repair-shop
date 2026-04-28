@@ -49,7 +49,7 @@ public class RepairOrderRegistry{
             date,
             0,
             repairReport,
-            "Awaiting Diagnostic", 
+            "Newly created", 
             customer,
             repairId
 
