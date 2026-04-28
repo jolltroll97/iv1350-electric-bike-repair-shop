@@ -16,8 +16,10 @@ public class RepairOrderRegistry{
     private List<RepairOrderDTO> repairOrders = new ArrayList<>();
     private int repairId = 1; 
 
-    RepairOrderRegistry(){
-        /* Constructor, vet ej vad som ska vara i */
+    public RepairOrderRegistry(){
+        this.repairOrders.add();
+        this.repairOrders.add();
+        this.repairOrders.add();
     }
 
     /**
