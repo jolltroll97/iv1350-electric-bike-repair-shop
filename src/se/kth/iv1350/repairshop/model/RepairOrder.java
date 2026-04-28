@@ -1,6 +1,8 @@
 package se.kth.iv1350.repairshop.model;
 
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Represents a repair order in the repair shop system.
