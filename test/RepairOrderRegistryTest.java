@@ -29,8 +29,6 @@ public class RepairOrderRegistryTest {
 
         repairOrderRegistry = new RepairOrderRegistry();
 
-        firstTestCustomer = new CustomerDTO("Jane Doe", 701234567, null, null);
-
         firstTestRepairOrder = new RepairOrderDTO(null, 20260428, 1000, "Broken battery", "Finished", firstTestCustomer, 1);
         secondTestRepairOrder = new RepairOrderDTO(null, 20260427, 1500, "Flat tires", "Finished", firstTestCustomer, 2);
 
@@ -38,6 +36,8 @@ public class RepairOrderRegistryTest {
     
     @Test
     public void testCreateRepairOrder() {
+        System.out.println("<<<<<<<<<< Test for createRepairOrder() >>>>>>>>>>");
+
         int firstRepairOrderId = repairOrderRegistry.createRepairOrder(firstTestCustomer, 20260427, "Broken battery");
         int secondRepairOrderId = repairOrderRegistry.createRepairOrder(secondTestCustomer, 20260428, "Loud rattling noise");
 
@@ -54,6 +54,7 @@ public class RepairOrderRegistryTest {
 
     @Test
     public void testGetById() {
+        System.out.println("<<<<<<<<<< Test for getById() >>>>>>>>>>");
 
         RepairOrderDTO firstRepairOrder = repairOrderRegistry.getById(1);
         RepairOrderDTO secondRepairOrder = repairOrderRegistry.getById(2);
@@ -66,24 +67,66 @@ public class RepairOrderRegistryTest {
     @Test
     public void testGetByPhoneNum() {
 
-        ArrayList<RepairOrderDTO> testRepairOrderList = new ArrayList<>(repairOrderRegistry.getByPhoneNum(701234567));
-        assert
+        System.out.println("<<<<<<<<<< Test for getByPhoneNum() >>>>>>>>>>");
 
+        int phoneNum = 701234567;
+        repairOrderRegistry.createRepairOrder(firstTestCustomer, phoneNum, null);
+
+
+        ArrayList<RepairOrderDTO> testRepairOrderList = repairOrderRegistry.getByPhoneNum(phoneNum);
+
+        assertFalse(testRepairOrderList.isEmpty(), "List empty; list not created properly");
+        assertEquals(1, testRepairOrderList.size(), "Only one repair order associated with this phone number");
+
+        assertEquals(phoneNum, testRepairOrderList.getCustomer().getPhoneNum(), "Phone number does not match customer");
 
     }
 
     @Test
     public void testRetrieveRepairOrderList() {
 
+        System.out.println("<<<<<<<<<< Test for retrieveRepairOrderList() >>>>>>>>>>");
+
+        repairOrderRegistry.add(firstTestRepairOrder);
+        repairOrderRegistry.add(secondTestRepairOrder);
+         ArrayList<RepairOrderDTO> testStateListRepairOrders = repairOrderRegistry.retrieveRepairOrderList("Newly created");
+
+         assertFalse(testStateListRepairOrders.isEmpty(), "List empty, list not created properly");
+         assertEquals(2, testStateListRepairOrders.size(), "Two repair orders with 'Newly created' state");
+
+         assertEquals("Newly created", testStateListRepairOrders.getRepairOrder().getState(), "State does not match; wrong state");
+
+
     }
 
     @Test
     public void testUpdateRepairOrderDiagnostic() {
 
+        System.out.println("<<<<<<<<<< Test for updateRepairOrderDiagnostic() >>>>>>>>>>");
+
+        int id = repairOrderRegistry.createRepairOrder(firstTestCustomer, 20260428, "Bike won't start");
+
+        RepairOrderDTO originalRepairOrder = repairOrderRegistry.getById(id);
+
+        RepairOrderDTO repairOrderWithDiagnostic = new RepairOrderDTO("Change battery", originalRepairOrder.getDate(), 1000, originalRepairOrder.getRepairReport(), "Ready for approval", firstTestCustomer, id);
+
+        repairOrderRegistry.updateRepairOrderDiagnostic(repairOrderWithDiagnostic);
+
+        RepairOrderDTO  updatedRepairOrder = repairOrderRegistry.getById(id);
+
+        assertEquals("Change battery", updatedRepairOrder.getReportDTO(), "Diagnostic report did not update");
+
     }
 
     @Test
     public void testUpdateRepairOrderState() {
+
+        System.out.println("<<<<<<<<<< Test for updateRepairOrderState() >>>>>>>>>>");
+
+        RepairOrderDTO repairOrderWithNewState =  repairOrderRegistry.updateRepairOrderState(firstTestRepairOrder, "Accepted");
+
+        assertEquals("Accepted", repairOrderWithNewState.getState(), "State did not update");
+
 
     }
 }
