@@ -14,12 +14,12 @@ import java.util.List;
 public class RepairOrderRegistry{
 
     private List<RepairOrderDTO> repairOrders = new ArrayList<>();
-    private int repairId = 1; 
+    private int repairId = 6; 
 
-    public RepairOrderRegistry(){
-        this.repairOrders.add();
-        this.repairOrders.add();
-        this.repairOrders.add();
+    RepairOrderRegistry(){
+        this.repairOrders.add(new RepairOrderDTO(""));
+        this.repairOrders.add(new RepairOrderDTO(""));
+        this.repairOrders.add(new RepairOrderDTO(""));
     }
 
     /**
