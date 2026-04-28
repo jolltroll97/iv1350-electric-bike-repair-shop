@@ -28,7 +28,7 @@ public class CustomerRegistryTest {
 
     @Test
     public void testFindCustomer() {
-        System.out.println(">>> RUNNING TEST: FindCustomer <<<");
+        System.out.println(">>> RUNNING TEST: findCustomer <<<");
 
         int phoneNumSearch = 701234566; // Douglas Andersson
         CustomerDTO foundCustomer = testRegistry.findCustomer(phoneNumSearch);
@@ -40,7 +40,7 @@ public class CustomerRegistryTest {
 
     @Test
     public void testFindCustomerThatDoesNotExist() {
-        System.out.println(">>> RUNNING TEST: FindCustomerThatDoesNotExist <<<");
+        System.out.println(">>> RUNNING TEST: findCustomerThatDoesNotExist <<<");
 
         
         int fakePhone = 999999999; // Fake phone number

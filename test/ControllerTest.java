@@ -37,6 +37,7 @@ public class ControllerTest {
 
     @Test
     void testRetrieveCustomerInfo() {
+        System.out.println(">>> RUNNING TEST: retrieveCustomerInfo <<<");
         // ACT: Search for the hardcoded customer we put in the CustomerRegistry earlier!
         int phoneToSearch = 701234566; // Douglas Andersson
         CustomerDTO result = testController.retrieveCustomerInfo(phoneToSearch);
@@ -48,6 +49,8 @@ public class ControllerTest {
 
     @Test
     void testCreateRepairOrder() {
+        System.out.println(">>> RUNNING TEST: createRepairOrder <<<");
+
         // ARRANGE: Create a dummy customer
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
         //String name, int phoneNum, String email, BikeDTO bikeDTO
@@ -67,6 +70,9 @@ public class ControllerTest {
 
     @Test
     void testGetByPhoneNum() {
+        System.out.println(">>> RUNNING TEST: getByPhoneNum <<<");
+
+        System.out.println(">>> RUNNING TEST: getByPhoneNum <<<");
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
         // ARRANGE: Create two orders for the same person
         CustomerDTO repeatCustomer = new CustomerDTO("Janne", 555555, "janne@email.com", dummyBike);
@@ -83,6 +89,8 @@ public class ControllerTest {
 
     @Test
     void testRetrieveRepairOrderList() {
+        System.out.println(">>> RUNNING TEST: retrieveRepairOrderList <<<");
+
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
         // ARRANGE: Create an order. (Assuming default state is "Pending" or similar when created)
         CustomerDTO dummyCustomer = new CustomerDTO("Bob", 999999, "bob@email.com", dummyBike);
@@ -101,6 +109,8 @@ public class ControllerTest {
 
     @Test
     void testAddDiagnosticReport() {
+        System.out.println(">>> RUNNING TEST: addDiagnosticReport <<<");
+
         // ARRANGE: Create an order and fetch it to get its ID
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
         CustomerDTO dummyCustomer = new CustomerDTO("Test Name", 111222, "test@email.com", dummyBike);
@@ -122,6 +132,8 @@ public class ControllerTest {
 
     @Test
     void testUpdateRepairOrder() {
+        System.out.println(">>> RUNNING TEST: updateRepairOrder <<<");
+
         // ARRANGE: Create an order and fetch it to get its ID
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
         CustomerDTO dummyCustomer = new CustomerDTO("Update Tester", 333444, "update@email.com", dummyBike);
@@ -147,6 +159,8 @@ public class ControllerTest {
 
     @Test
     void testCustomerResponse() {
+        System.out.println(">>> RUNNING TEST: customerResponse <<<");
+
         // ARRANGE: Create an order and fetch it so we have the specific DTO
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
         CustomerDTO dummyCustomer = new CustomerDTO("Response Tester", 888999, "response@email.com", dummyBike);
