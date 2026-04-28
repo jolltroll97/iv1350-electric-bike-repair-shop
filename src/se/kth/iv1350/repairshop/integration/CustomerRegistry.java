@@ -1,5 +1,7 @@
 package se.kth.iv1350.repairshop.integration;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
+import se.kth.iv1350.repairshop.dto.BikeDTO;
+
 import java.util.ArrayList; 
 import java.util.List;
 
@@ -11,9 +13,13 @@ public class CustomerRegistry {
     private List<CustomerDTO> customers = new ArrayList<>();
 
     public CustomerRegistry(){
-        this.customers.add(new CustomerDTO("Douglas Andersson", 701234566, "douglas.andersson0@gmail.com", null));
-        this.customers.add(new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", null));
-        this.customers.add(new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", null));
+        BikeDTO bikeOne = new BikeDTO("Crescent", "Elody", "1234");
+        BikeDTO bikeTwo = new BikeDTO("Crescent", "Elist", "1235");
+        BikeDTO bikeThree = new BikeDTO("Crescent", "Eli", "1236");
+        
+        this.customers.add(new CustomerDTO("Douglas Andersson", 701234566, "douglas.andersson0@gmail.com", bikeOne));
+        this.customers.add(new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", bikeTwo));
+        this.customers.add(new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", bikeThree));
     }
 
     /**
