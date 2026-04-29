@@ -47,7 +47,11 @@ public class View {
 
         // --- Workflow points 9-11 ---
         // Receptionist asks for problem description, and creates a repair order.
-        contr.createRepairOrder(MrAndersson, 20260429, "Broken chain, battery dead");
+        int newRepairOrder = contr.createRepairOrder(MrAndersson, 20260429, "Broken chain, battery dead");
+        // Print the returned ID
+        out.println("--- Method: createRepairOrder ---");
+        out.println(newRepairOrder);
+        out.println("\n");
 
         // --- Workflow points 12-14 ---
         // Customer waits. Technician asks system for repair order.
@@ -60,12 +64,12 @@ public class View {
         }
         
         // Technician selects the correct repair order (by saving the ID).
-        // (The original idea was to use curentRepairOrder from Controller.
+        // The ID is returned when the new repair report is created, 
+        // and also shows up in the list "pendingRepairOrders"
         // we later realized that this would be a front end feature, so it is not used)
 
         // int selectedRepairOrder = 4;
-        int selectedRepairOrder = contr.currentRepairOrder;
-        out.println(selectedRepairOrder);
+        int selectedRepairOrder = newRepairOrder;
 
         // --- Workflow points 15-17 ---
         // Technician performs diagnostic, and adds repair tasks.
@@ -73,11 +77,24 @@ public class View {
         RepairTaskDTO taskTwo = new RepairTaskDTO("Change battery", 3000, 45);
         // Adding task one
         DiagnosticReportDTO reportDTOFirst = contr.addDiagnosticReport(taskOne, selectedRepairOrder);
+        // Print the returned DiagnosticReportDTO (1)
+        out.println("--- Method: addDiagnosticReport (first task)---");
+        out.println(reportDTOFirst);
+        out.println("\n");
+        // Update the repair order (1)
         contr.updateRepairOrder(reportDTOFirst, selectedRepairOrder);
-        // Adding taks two
+        // Adding task two
         DiagnosticReportDTO reportDTOSecond = contr.addDiagnosticReport(taskTwo, selectedRepairOrder);
+        // Print the returned DiagnosticReportDTO (2)
+        out.println("--- Method: addDiagnosticReport (second task)---");
+        out.println(reportDTOSecond);
+        out.println("\n");
+        // Update the repair order (2)
         contr.updateRepairOrder(reportDTOSecond, selectedRepairOrder);
 
+        // --- Workflow point: 18-23 ---
+        RepairOrderDTO finalReport = contr.getById(newRepairOrder);
+        contr.customerResponse(true, finalReport);
         
     }
 }

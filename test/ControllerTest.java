@@ -52,19 +52,24 @@ public class ControllerTest {
 
         // ARRANGE: Create a dummy customer
         BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
-        //String name, int phoneNum, String email, BikeDTO bikeDTO
         CustomerDTO dummyCustomer = new CustomerDTO("Test Name", 123123, "test@email.com", dummyBike);
         
-        // ACT: Tell the controller to create the order
-        testController.createRepairOrder(dummyCustomer, 20231027, "Flat tire");
+        // ACT: Tell the controller to create the order AND capture the returned ID!
+        int returnedId = testController.createRepairOrder(dummyCustomer, 20231027, "Flat tire");
 
-        // ASSERT: To prove it worked, we ask the controller to fetch orders for this phone number.
-        // It should return a list with exactly 1 item in it!
+        // ASSERT: 
+        // 1. Basic sanity check: ensure the ID isn't 0 or negative
+        assertTrue(returnedId > 0, "The returned ID should be a valid positive number.");
+
+        // 2. Fetch the orders from the database to prove it actually saved
         List<RepairOrderDTO> orders = testController.getByPhoneNum(123123);
         
         assertNotNull(orders, "The order list should not be null.");
-        assertEquals(1, orders.size(), "There should be exactly 1 order in the registry for this customer.");
+        assertEquals(1, orders.size(), "There should be exactly 1 order in the registry.");
         assertEquals("Flat tire", orders.get(0).getRepairReport(), "The repair report description did not match.");
+        
+        // 3. THE NEW ASSERT: Does the ID returned to the user perfectly match the database?
+        assertEquals(returnedId, orders.get(0).getRepairId(), "The returned ID did not match the actual saved ID!");
     }
 
     @Test
@@ -177,5 +182,25 @@ public class ControllerTest {
         
         // We assert that the state is no longer "Newly created" (or whatever your default is)
         assertNotEquals("Newly created", updatedOrder.getState(), "The state should have changed after customer accepted.");
+    }
+
+    @Test
+    void testGetById() {
+        System.out.println(">>> RUNNING TEST: getById <<<");
+
+        // ARRANGE: Create a dummy customer and order, and capture the new ID
+        BikeDTO dummyBike = new BikeDTO("Crescent", "Elist", "1122");
+        CustomerDTO dummyCustomer = new CustomerDTO("ID Fetch Tester", 998877, "fetch@email.com", dummyBike);
+        
+        int expectedId = testController.createRepairOrder(dummyCustomer, 20231120, "Gears are skipping");
+
+        // ACT: Ask the controller to fetch the order using the ID we just got
+        RepairOrderDTO fetchedOrder = testController.getById(expectedId);
+
+        // ASSERT: Prove the controller found the correct order
+        assertNotNull(fetchedOrder, "Controller should have found the order, but returned null.");
+        assertEquals(expectedId, fetchedOrder.getRepairId(), "The fetched order has the wrong ID.");
+        assertEquals("Gears are skipping", fetchedOrder.getRepairReport(), "The fetched order has the wrong repair report.");
+        assertEquals("ID Fetch Tester", fetchedOrder.getCustomer().getName(), "The fetched order belongs to the wrong customer.");
     }
 }
