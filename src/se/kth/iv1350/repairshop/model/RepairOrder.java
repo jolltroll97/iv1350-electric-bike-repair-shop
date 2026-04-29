@@ -16,7 +16,7 @@ public class RepairOrder {
      * @param cost An array of RepairTaskDTO objects representing the tasks to be performed.
      * @return The total cost as an integer, representing the sum of all task costs.
      */
-    public int calculateTotal(RepairTaskDTO[] cost) {
+    public int calculateTotal(ArrayList<RepairTaskDTO> cost) {
         int totalCost = 0;
         // Iterate through each repair task
         for (RepairTaskDTO task : cost) {

@@ -33,7 +33,7 @@ public class RepairOrderTest {
         RepairTaskDTO task3 = new RepairTaskDTO("Adjust brakes", 100, 15);
 
         // Put them into a List instead of an Array!
-        List<RepairTaskDTO> taskList = new ArrayList<>();
+        ArrayList<RepairTaskDTO> taskList = new ArrayList<>();
         taskList.add(task1);
         taskList.add(task2);
         taskList.add(task3);
@@ -48,7 +48,7 @@ public class RepairOrderTest {
     @Test
     void testCalculateTotalWithEmptyList() {
         // ARRANGE: Create an empty List
-        List<RepairTaskDTO> emptyList = new ArrayList<>();
+        ArrayList<RepairTaskDTO> emptyList = new ArrayList<>();
 
         // ACT
         int result = testOrder.calculateTotal(emptyList);

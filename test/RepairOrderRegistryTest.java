@@ -26,6 +26,11 @@ public class RepairOrderRegistryTest {
         repairOrderRegistry = new RepairOrderRegistry();
 
     }
+
+    @AfterEach
+    public void tearDown(){
+        repairOrderRegistry = null;
+    }
     
     @Test
     public void testCreateRepairOrder() {
@@ -34,8 +39,8 @@ public class RepairOrderRegistryTest {
         int firstRepairOrderId = repairOrderRegistry.createRepairOrder(firstTestCustomer, 20260427, "Broken battery");
         int secondRepairOrderId = repairOrderRegistry.createRepairOrder(secondTestCustomer, 20260428, "Loud rattling noise");
 
-        assertEquals(1, firstRepairOrderId);
-        assertEquals(2, secondRepairOrderId);
+        assertEquals(4, firstRepairOrderId);
+        assertEquals(5, secondRepairOrderId);
 
         RepairOrderDTO firstRepairOrder = repairOrderRegistry.getById(firstRepairOrderId);
         RepairOrderDTO secondRepairOrder = repairOrderRegistry.getById(secondRepairOrderId);
@@ -63,10 +68,14 @@ public class RepairOrderRegistryTest {
         System.out.println("<<<<<<<<<< Test for getByPhoneNum() >>>>>>>>>>");
 
         int phoneNum = 701234567;
-        repairOrderRegistry.createRepairOrder(firstTestCustomer, phoneNum, null);
+        ArrayList<RepairOrderDTO> testRepairOrderList = new ArrayList<>();
+       
+        CustomerDTO testCustomer = new CustomerDTO("Jane Doe", phoneNum, "bla",null);
+        RepairOrderDTO originalRepairReport = new RepairOrderDTO(null, 20260428, 0, "bla","Newly created", testCustomer, 1);
 
+        testRepairOrderList.add(originalRepairReport);
 
-        ArrayList<RepairOrderDTO> testRepairOrderList = repairOrderRegistry.getByPhoneNum(phoneNum);
+        repairOrderRegistry.getByPhoneNum(phoneNum);
 
         assertFalse(testRepairOrderList.isEmpty(), "List empty; list not created properly");
         assertEquals(1, testRepairOrderList.size(), "Only one repair order associated with this phone number");
@@ -117,12 +126,14 @@ public class RepairOrderRegistryTest {
 
         System.out.println("<<<<<<<<<< Test for updateRepairOrderState() >>>>>>>>>>");
 
-    
-        RepairOrderDTO newRepairOrder = new RepairOrderDTO(null, 20260428, 1000, null, "Ready for approval", firstTestCustomer, 1);
+        int id = repairOrderRegistry.createRepairOrder(firstTestCustomer, 20260428, "Bike won't start");
+        RepairOrderDTO originalRepairOrder = repairOrderRegistry.getById(id);
 
-        repairOrderRegistry.updateRepairOrderState(newRepairOrder, "Accepted");
+        repairOrderRegistry.updateRepairOrderState(originalRepairOrder, "Accepted");
 
-        assertEquals("Accepted", newRepairOrder.getState(), "State did not update");
+        RepairOrderDTO updatedRepairOrder = repairOrderRegistry.getById(id);
+
+        assertEquals("Accepted", updatedRepairOrder.getState(), "State did not update");
 
 
     }

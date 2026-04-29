@@ -32,4 +32,31 @@ public class RegistryCreatorTest {
         RepairOrderRegistry result = instance.getRepairOrderRegistry();
         assertNotNull(result, "getRepairOrderRegistry should not return null");
     }
+
+    @Test
+    public void testGetCustomerRegistryReturnsSameInstance() {
+        CustomerRegistry firstCall = instance.getCustomerRegistry();
+        CustomerRegistry secondCall = instance.getCustomerRegistry();
+        assertSame(firstCall, secondCall, 
+                   "Should return the same CustomerRegistry instance");
+    }
+    
+    @Test
+    public void testGetRepairOrderRegistryReturnsSameInstance() {
+        RepairOrderRegistry firstCall = instance.getRepairOrderRegistry();
+        RepairOrderRegistry secondCall = instance.getRepairOrderRegistry();
+        assertSame(firstCall, secondCall, 
+                   "Should return the same RepairOrderRegistry instance");
+    }
+    
+    @Test
+    public void testDifferentRegistryCreatorInstancesHaveDifferentRegistries() {
+        RegistryCreator anotherInstance = new RegistryCreator();
+        
+        CustomerRegistry firstCustomerRegistry = instance.getCustomerRegistry();
+        CustomerRegistry secondCustomerRegistry = anotherInstance.getCustomerRegistry();
+        
+        assertNotSame(firstCustomerRegistry, secondCustomerRegistry,
+                      "Different RegistryCreator instances should have different CustomerRegistry instances");
+    }
 }
