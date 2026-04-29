@@ -22,7 +22,7 @@ public class Controller {
     private final RepairOrderRegistry repairOrderRegistry;
     private final OrderHandler orderHandler;
 
-    public int currentRepairOrder;
+    private int currentRepairOrder;
 
     /**
      * Creates a new instance of the Controller.
@@ -55,11 +55,13 @@ public class Controller {
      * @param date          The date rthe repair order was created.
      * @param repairReport  Description of the repair report (receptionist enters this).
      */
-    public void createRepairOrder(CustomerDTO customer, int date, String repairReport){
+    public int createRepairOrder(CustomerDTO customer, int date, String repairReport){
         
         int newOrderId = this.repairOrderRegistry.createRepairOrder(customer, date, repairReport);
 
         this.currentRepairOrder = newOrderId;
+
+        return newOrderId;
 
     }
 
@@ -171,5 +173,17 @@ public class Controller {
         else{
             orderHandler.orderRejected(selectedRepairOrder);
         }
+    }
+
+    /**
+     * Returns the correct repair order by searching for it's ID.
+     * 
+     * @param repairOrderId      The ID of the repair order that wants to be found
+     */
+
+    public RepairOrderDTO getById (int repairOrderId){
+
+        return this.repairOrderRegistry.getById(repairOrderId);
+
     }
 }
