@@ -84,6 +84,7 @@ public class RepairOrderDTO {
 
         if (reportDTO != null){
             builder.append("Diagnostic Report: ")
+                   .append("\n")
                    .append(reportDTO) // Java still calls toString() automatically here!
                    .append("\n");
         } else {
