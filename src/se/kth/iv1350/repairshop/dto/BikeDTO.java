@@ -31,7 +31,7 @@ public class BikeDTO {
 
             builder.append("Brand: ").append(brand).append("\n")
                     .append("Model: ").append(model).append("\n")
-                    .append("Serial number: ").append(serialNum).append("\n");
+                    .append("Serial number: ").append(serialNum);
 
         return builder.toString();
     }

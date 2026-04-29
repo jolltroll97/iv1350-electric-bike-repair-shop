@@ -31,9 +31,9 @@ public class RepairOrderRegistry{
         CustomerDTO customerTwo = new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", bikeTwo);
         CustomerDTO customerThree = new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", bikeThree);
         
-        this.repairOrders.add(new RepairOrderDTO(null, 20260426, 10250, "Det mesta behöver bytas", "Newly created", customerOne, 1));
+        this.repairOrders.add(new RepairOrderDTO(null, 20260426, 10250, "Det mesta behöver bytas", "Ready for approval", customerOne, 1));
         this.repairOrders.add(new RepairOrderDTO(null, 20260427, 1650, "Punktering, rostiga bromsar", "Newly created", customerTwo, 2));
-        this.repairOrders.add(new RepairOrderDTO(null, 20260428, 3550, "Rullar dåligt, kan vara kullagerna", "Ready for approval", customerThree, 3));
+        this.repairOrders.add(new RepairOrderDTO(null, 20260428, 3550, "Rullar dåligt, kan vara kullagerna", "Newly created", customerThree, 3));
     }
 
     /**
