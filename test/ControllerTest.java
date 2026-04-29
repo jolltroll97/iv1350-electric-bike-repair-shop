@@ -38,11 +38,10 @@ public class ControllerTest {
     @Test
     void testRetrieveCustomerInfo() {
         System.out.println(">>> RUNNING TEST: retrieveCustomerInfo <<<");
-        // ACT: Search for the hardcoded customer we put in the CustomerRegistry earlier!
+        // 
         int phoneToSearch = 701234566; // Douglas Andersson
         CustomerDTO result = testController.retrieveCustomerInfo(phoneToSearch);
 
-        // ASSERT: Verify the Controller successfully asked the registry and got the answer back
         assertNotNull(result, "Controller should have retrieved a customer, but got null.");
         assertEquals("Douglas Andersson", result.getName(), "Controller retrieved the wrong customer name.");
     }

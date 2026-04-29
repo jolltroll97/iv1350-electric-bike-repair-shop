@@ -22,7 +22,7 @@ public class Controller {
     private final RepairOrderRegistry repairOrderRegistry;
     private final OrderHandler orderHandler;
 
-    private int currentRepairOrder;
+    public int currentRepairOrder;
 
     /**
      * Creates a new instance of the Controller.
