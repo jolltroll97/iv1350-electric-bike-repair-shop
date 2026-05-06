@@ -27,33 +27,28 @@ public class RepairOrderTest {
 
     @Test
     void testCalculateTotalWithMultipleTasks() {
-        // ARRANGE
+        
         RepairTaskDTO task1 = new RepairTaskDTO("Fix tire", 250, 30);
         RepairTaskDTO task2 = new RepairTaskDTO("Replace chain", 150, 20);
         RepairTaskDTO task3 = new RepairTaskDTO("Adjust brakes", 100, 15);
 
-        // Put them into a List instead of an Array!
         ArrayList<RepairTaskDTO> taskList = new ArrayList<>();
         taskList.add(task1);
         taskList.add(task2);
         taskList.add(task3);
 
-        // ACT
         int result = testOrder.calculateTotal(taskList);
 
-        // ASSERT
         assertEquals(500, result, "The calculated total cost was incorrect.");
     }
 
     @Test
     void testCalculateTotalWithEmptyList() {
-        // ARRANGE: Create an empty List
+        
         ArrayList<RepairTaskDTO> emptyList = new ArrayList<>();
 
-        // ACT
         int result = testOrder.calculateTotal(emptyList);
 
-        // ASSERT
         assertEquals(0, result, "An empty task list should cost 0.");
     }
 }
