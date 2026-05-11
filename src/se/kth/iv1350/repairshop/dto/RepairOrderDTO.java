@@ -97,7 +97,7 @@ public class RepairOrderDTO {
         builder.append("repairReport: " + repairReport + ", ");
         builder.append("state: " + state + ", ");
         builder.append("customer: " + customer + ", ");
-        builder.append("repairId: " + repairId + ", ");
+        builder.append("repairId: " + repairId);
                
         return builder.toString();
     }

@@ -43,7 +43,7 @@ public class CustomerDTO {
             builder.append("name: " + name + ", ");
             builder.append("phoneNum: " + phoneNum + ", ");
             builder.append("email: " + email + ", ");
-            builder.append("bike: " + bikeDTO + ", ");
+            builder.append("bike: " + bikeDTO);
 
         return builder.toString();
     }
