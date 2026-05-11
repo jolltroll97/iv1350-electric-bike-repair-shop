@@ -1,11 +1,14 @@
 package se.kth.iv1350.repairshop.view;
 
 import se.kth.iv1350.repairshop.controller.Controller;
+import se.kth.iv1350.repairshop.util.LogHandler;
 import se.kth.iv1350.repairshop.dto.BikeDTO;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
 import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
+import se.kth.iv1350.repairshop.integration.CustomerNotFoundException;
+import se.kth.iv1350.repairshop.integration.DatabaseFailureException;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -19,14 +22,16 @@ import static java.lang.System.out;
 public class View {
 
     private final Controller contr;
+    private final LogHandler logger;
 
     /**
      * Creates a new view instance, with a specified controller for all calls to other layers.
      * This creates the desired layer separation.
      * @param contr     The controller to use for all calls to other layers.
      */
-    public View(Controller contr) {
+    public View(Controller contr, LogHandler logger) {
         this.contr = contr;
+        this.logger = new LogHandler();
     }
 
     private String bikeDTOToString(BikeDTO bikeDTO){
@@ -91,6 +96,24 @@ public class View {
 
         return builder.toString();
     }
+
+    /**
+     * Helper method to handle the actual search and catch any errors.
+     */
+    private void searchForCustomer(int phoneNumber) {
+        try {
+            contr.retrieveCustomerInfo(phoneNumber);
+            System.out.println("SUCCESS: Customer found and loaded");
+
+        } catch (DatabaseFailureException exc) {
+            System.out.println("Cannot reach customer database.");
+            logger.logException(exc);
+
+        } catch (CustomerNotFoundException exc) {
+            System.out.println("Customer not found.");
+            logger.logException(exc);
+    }
+
 
     /**
      * Performs fake user executions.
@@ -159,5 +182,21 @@ public class View {
         RepairOrderDTO finalReport = contr.getById(newRepairOrder);
         contr.customerResponse(true, finalReport);
         
+    }
+
+    public void alternateFlow(){
+        System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
+
+        // SCENARIO 1: A normal, successful search (from your hardcoded list)
+        System.out.println("1. Cashier searches for valid customer (701234566):");
+        searchForCustomer(701234566); 
+
+        // SCENARIO 2: The Alternate Flow (Customer not found)
+        System.out.println("\n2. Cashier searches for non-existent customer (999999999):");
+        searchForCustomer(999999999); 
+
+        // SCENARIO 3: The System Failure (Database crash)
+        System.out.println("\n3. Cashier searches while database is down (666):");
+        searchForCustomer(666);
     }
 }
