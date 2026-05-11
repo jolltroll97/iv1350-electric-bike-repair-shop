@@ -82,21 +82,22 @@ public class RepairOrderDTO {
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
-        if (reportDTO != null){
+       /*  if (reportDTO != null){
             builder.append("Diagnostic Report: ")
                    .append("\n")
-                   .append(reportDTO) // Java still calls toString() automatically here!
+                   .append(reportDTO) 
                    .append("\n");
         } else {
             builder.append("Diagnostic Report: Diagnosis not done yet\n");
         }
+        */ 
 
-        builder.append("Date: ").append(date).append("\n")
-               .append("Total Cost: ").append(totalCost).append("\n")
-               .append("Repair Report: ").append(repairReport).append("\n")
-               .append("State: ").append(state).append("\n")
-               .append("Customer info: ").append(customer).append("\n")
-               .append("Repair ID: ").append(repairId);
+        builder.append("date: " + date + ", ");
+        builder.append("totalCost: " + totalCost + ", ");
+        builder.append("repairReport: " + repairReport + ", ");
+        builder.append("state: " + state + ", ");
+        builder.append("customer: " + customer + ", ");
+        builder.append("repairId: " + repairId + ", ");
                
         return builder.toString();
     }

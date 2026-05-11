@@ -40,10 +40,10 @@ public class CustomerDTO {
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
-            builder.append("Name: ").append(name).append("\n")
-                    .append("Phone number: ").append(phoneNum).append("\n")
-                    .append("Email: ").append(email).append("\n")
-                    .append("Bike: ").append(bikeDTO);
+            builder.append("name: " + name + ", ");
+            builder.append("phoneNum: " + phoneNum + ", ");
+            builder.append("email: " + email + ", ");
+            builder.append("bike: " + bikeDTO + ", ");
 
         return builder.toString();
     }

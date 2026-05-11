@@ -40,6 +40,7 @@ public class DiagnosticReportDTO {
     public int getTotalTime() {
         return totalTime;
     }
+
     
     /**
      * Updates the list of repair tasks in this diagnostic report.
@@ -56,10 +57,13 @@ public class DiagnosticReportDTO {
      * 
      * @return A formatted string describing the diagnostic report
      */
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Repair Tasks: ").append(repairTasksList.size())
-               .append(" tasks").append("\n").append("Total Time: ").append(totalTime).append(" minutes");
+
+        builder.append("repairTasksList: " + repairTasksList.size() +  ", ");
+        builder.append("totalTime: " + totalTime + ", ");
+
         return builder.toString();
     }
 }
