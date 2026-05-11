@@ -49,7 +49,7 @@ public class RepairTaskDTO {
 
         builder.append("description: " + description + ", ");
         builder.append("cost: " + cost + ", ");
-        builder.append("time: " + time + ", ");
+        builder.append("time: " + time);
                
         return builder.toString();
     }

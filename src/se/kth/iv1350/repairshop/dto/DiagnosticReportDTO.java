@@ -62,7 +62,7 @@ public class DiagnosticReportDTO {
         StringBuilder builder = new StringBuilder();
 
         builder.append("repairTasksList: " + repairTasksList.size() +  ", ");
-        builder.append("totalTime: " + totalTime + ", ");
+        builder.append("totalTime: " + totalTime);
 
         return builder.toString();
     }
