@@ -30,7 +30,7 @@ public class BikeDTO {
         StringBuilder builder = new StringBuilder();
 
             builder.append("Brand: " + brand +", ");
-            builder.append("Model: " + model + ",");
+            builder.append("Model: " + model + ", ");
             builder.append("Serial number: " + serialNum);
 
         return builder.toString();
