@@ -26,8 +26,13 @@ public class CustomerRegistry {
      * Searches for a customer by their phone number.
      * @param phoneNum The phone number of the customer to find.
      * @return All customer information
+     * @throws CustomerNotFoundException if no customer has the specified phone number.
      */
-    public CustomerDTO findCustomer(int phoneNum){
+    public CustomerDTO findCustomer(int phoneNum) throws CustomerNotFoundException, DatabaseFailureException{
+
+        if (phoneNum == 666){
+            throw new DatabaseFailureException("Cannot access customer database server");
+        }
 
         for(CustomerDTO customer : customers){
 
@@ -37,7 +42,7 @@ public class CustomerRegistry {
 
         }
 
-        return null;
+        throw new CustomerNotFoundException(String.valueOf(phoneNum));
     }
 
 }

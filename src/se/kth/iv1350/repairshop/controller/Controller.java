@@ -14,6 +14,9 @@ import se.kth.iv1350.repairshop.model.RepairOrder;
 import se.kth.iv1350.repairshop.model.OrderHandler;
 import se.kth.iv1350.repairshop.integration.Printer;
 
+import se.kth.iv1350.repairshop.integration.CustomerNotFoundException;
+import se.kth.iv1350.repairshop.integration.DatabaseFailureException;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -45,8 +48,11 @@ public class Controller {
      * The actual searching logic is done in the integration layer.
      * 
      * @param phoneNum      The customers phone number.
+     * @return The customer information.
+     * @throws CustomerNotFoundException if the customer cannot be found in the database.
+     * @throws DatabaseFailureException if the database cannot be reached.
      */
-    public CustomerDTO retrieveCustomerInfo(int phoneNum){
+    public CustomerDTO retrieveCustomerInfo(int phoneNum)throws CustomerNotFoundException, DatabaseFailureException{
 
         return this.customerRegistry.findCustomer(phoneNum);
     }
