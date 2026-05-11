@@ -28,7 +28,70 @@ public class View {
     public View(Controller contr) {
         this.contr = contr;
     }
+
+    private String bikeDTOToString(BikeDTO bikeDTO){
+        StringBuilder builder = new StringBuilder();
+        
+        builder.append("Brand: ").append(bikeDTO.getBrand()).append("\n")
+               .append("Model: ").append(bikeDTO.getModel()).append("\n")
+               .append("Serial number: ").append(bikeDTO.getSerialNum());
+
+               return builder.toString();
+    }
+
+    public String customerDTOToString(CustomerDTO customerDTO){
+        StringBuilder builder = new StringBuilder();
+
+            builder.append("Name: ").append(customerDTO.getName()).append("\n")
+                    .append("Phone number: ").append(customerDTO.getPhoneNum()).append("\n")
+                    .append("Email: ").append(customerDTO.getEmail()).append("\n")
+                    .append("Bike: ").append(customerDTO.getBikeDTO());
+
+        return builder.toString();
+    }
+
+    public String diagnosticReportDTOToString(DiagnosticReportDTO diagnosticReportDTO) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Repair Tasks: ").append(diagnosticReportDTO.getRepairTasksList().size())
+               .append(" tasks").append("\n").append("Total Time: ").append(diagnosticReportDTO.getTotalTime()).append(" minutes");
+
+        return builder.toString();
+    }
     
+    public String repairOrderDTOToString (RepairOrderDTO repairOrderDTO){
+        StringBuilder builder = new StringBuilder();
+
+          if (repairOrderDTO != null){
+            builder.append("Diagnostic Report: ")
+                   .append("\n")
+                   .append(repairOrderDTO) //fixa
+                   .append("\n");
+        } else {
+            builder.append("Diagnostic Report: Diagnosis not done yet\n");
+        }
+        
+        
+        builder.append("Date: ").append(repairOrderDTO.getDate()).append("\n")
+               .append("Total Cost: ").append(repairOrderDTO.getTotalCost()).append("\n")
+               .append("Repair Report: ").append(repairOrderDTO.getRepairReport()).append("\n")
+               .append("State: ").append(repairOrderDTO.getState()).append("\n")
+               .append("Customer info: ").append(repairOrderDTO.getCustomer()).append("\n") //fixa
+               .append("Repair ID: ").append(repairOrderDTO.getRepairId());
+
+               return builder.toString();
+    }
+
+    public String repairTaskDTOToString (RepairTaskDTO repairTaskDTO){
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Description: ").append(repairTaskDTO.getDescription()).append("\n")
+               .append("Cost: ").append(repairTaskDTO.getCost()).append("\n")
+               .append("Time: ").append(repairTaskDTO.getTime());
+
+        return builder.toString();
+    }
+
     /**
      * Performs fake user executions.
      */
@@ -42,7 +105,7 @@ public class View {
         // --- Workflow points 7-8 ---
         // Customer verifies the info.
         out.println("--- Method: retrieveCustomerInfo ---");
-        out.println(MrAndersson);
+        out.println(customerDTOToString(MrAndersson));
         out.println("\n");
 
         // --- Workflow points 9-11 ---
@@ -59,7 +122,7 @@ public class View {
         // Print the returned list.
         out.println("--- Method: retrieveRepairOrderList ---");
         for (RepairOrderDTO order : pendingRepairOrders){
-            out.println(order);
+            out.println(repairOrderDTOToString(order));
             out.println("\n");
         }
         
@@ -79,7 +142,7 @@ public class View {
         DiagnosticReportDTO reportDTOFirst = contr.addDiagnosticReport(taskOne, selectedRepairOrder);
         // Print the returned DiagnosticReportDTO (1)
         out.println("--- Method: addDiagnosticReport (first task)---");
-        out.println(reportDTOFirst);
+        out.println(diagnosticReportDTOToString(reportDTOFirst));
         out.println("\n");
         // Update the repair order (1)
         contr.updateRepairOrder(reportDTOFirst, selectedRepairOrder);
@@ -87,7 +150,7 @@ public class View {
         DiagnosticReportDTO reportDTOSecond = contr.addDiagnosticReport(taskTwo, selectedRepairOrder);
         // Print the returned DiagnosticReportDTO (2)
         out.println("--- Method: addDiagnosticReport (second task)---");
-        out.println(reportDTOSecond);
+        out.println(diagnosticReportDTOToString(reportDTOSecond));
         out.println("\n");
         // Update the repair order (2)
         contr.updateRepairOrder(reportDTOSecond, selectedRepairOrder);

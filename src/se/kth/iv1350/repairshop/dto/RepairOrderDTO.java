@@ -82,16 +82,6 @@ public class RepairOrderDTO {
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
-       /*  if (reportDTO != null){
-            builder.append("Diagnostic Report: ")
-                   .append("\n")
-                   .append(reportDTO) 
-                   .append("\n");
-        } else {
-            builder.append("Diagnostic Report: Diagnosis not done yet\n");
-        }
-        */ 
-
         builder.append("date: " + date + ", ");
         builder.append("totalCost: " + totalCost + ", ");
         builder.append("repairReport: " + repairReport + ", ");
