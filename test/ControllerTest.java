@@ -112,7 +112,7 @@ public class ControllerTest {
 
         
         assertNotNull(orders);
-        assertEquals(2, orders.size(), "The controller should have found 2 orders for Jane.");
+        assertEquals(2, orders.size(), "The controller should have found 2 orders for Janne.");
     }
 
     /**
