@@ -1,6 +1,9 @@
 package se.kth.iv1350.repairshop.model;
 
+import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
+import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
+import se.kth.iv1350.repairshop.integration.RepairOrderRegistry;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -9,6 +12,8 @@ import java.util.ArrayList;
  * Manages the calculation and handling of repair tasks and their associated costs.
  */
 public class RepairOrder {
+
+    private RepairOrderRegistry repairOrderRegistry;
     
     /**
      * Calculates the total cost of all repair tasks in the order.
@@ -16,6 +21,9 @@ public class RepairOrder {
      * @param cost An array of RepairTaskDTO objects representing the tasks to be performed.
      * @return The total cost as an integer, representing the sum of all task costs.
      */
+    public RepairOrder(RepairOrderRegistry repairOrderRegistry){
+        this.repairOrderRegistry = repairOrderRegistry;
+    }
     public int calculateTotal(ArrayList<RepairTaskDTO> cost) {
         int totalCost = 0;
         // Iterate through each repair task
@@ -24,5 +32,50 @@ public class RepairOrder {
             totalCost += task.getCost();
         }
         return totalCost;
+    }
+
+    public DiagnosticReportDTO addDiagnosticReport(RepairTaskDTO repairTask, int repairOrderId){
+        
+        // Fetch the correct data using the current ID
+        RepairOrderDTO orderDTO = this.repairOrderRegistry.getById(repairOrderId);
+       
+        // Extract the diagnostic report
+        DiagnosticReportDTO existingReportDTO = orderDTO.getReportDTO();
+
+        // Build the object
+        DiagnosticReport reportModel = new DiagnosticReport(existingReportDTO);
+
+        // Call add to list
+        reportModel.addToList(repairTask);
+
+        // Get the updated list
+        ArrayList<RepairTaskDTO> currentTasks = reportModel.getRepairTasksList();
+
+        int totalTime = reportModel.calculateTotalTime(currentTasks);
+
+        DiagnosticReportDTO updatedReportDTO = new DiagnosticReportDTO(currentTasks, totalTime);
+
+        return updatedReportDTO;
+
+    }
+
+    public void updateRepairOrder(DiagnosticReportDTO reportDTO, int repairOrderId){
+        // 1. Fetch the outdated order from the database
+        RepairOrderDTO oldOrder = this.repairOrderRegistry.getById(repairOrderId);
+        
+        // 2. Create a brand-new DTO. We copy all the old details,
+        // except the DiagnosticReportDTO (that is updated).
+        RepairOrderDTO updatedOrder = new RepairOrderDTO(
+            reportDTO,
+            oldOrder.getDate(),
+            oldOrder.getTotalCost(), 
+            oldOrder.getRepairReport(),
+            oldOrder.getState(),
+            oldOrder.getCustomer(),
+            oldOrder.getRepairId()
+        );
+        
+        // Update the database
+        this.repairOrderRegistry.updateRepairOrderDiagnostic(updatedOrder);
     }
 }
