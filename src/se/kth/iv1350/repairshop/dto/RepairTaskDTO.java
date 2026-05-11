@@ -47,9 +47,9 @@ public class RepairTaskDTO {
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("Description: ").append(description).append("\n")
-               .append("Cost: ").append(cost).append("\n")
-               .append("Time: ").append(time);
+        builder.append("description: " + description + ", ");
+        builder.append("cost: " + cost + ", ");
+        builder.append("time: " + time + ", ");
                
         return builder.toString();
     }
