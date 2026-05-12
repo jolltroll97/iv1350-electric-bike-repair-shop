@@ -23,15 +23,17 @@ public class View {
 
     private final Controller contr;
     private final LogHandler logger;
+    private final ErrorMessageHandler errorMessageHandler;
 
     /**
      * Creates a new view instance, with a specified controller for all calls to other layers.
      * This creates the desired layer separation.
      * @param contr     The controller to use for all calls to other layers.
      */
-    public View(Controller contr, LogHandler logger) {
+    public View(Controller contr, LogHandler logger, ErrorMessageHandler errorMessageHandler) {
         this.contr = contr;
         this.logger = new LogHandler();
+        this.errorMessageHandler = new ErrorMessageHandler();
     }
 
     private String bikeDTOToString(BikeDTO bikeDTO){
@@ -103,15 +105,16 @@ public class View {
     private void searchForCustomer(int phoneNumber) {
         try {
             contr.retrieveCustomerInfo(phoneNumber);
-            System.out.println("SUCCESS: Customer found and loaded");
-
-        } catch (DatabaseFailureException exc) {
-            System.out.println("Cannot reach customer database.");
-            logger.logException(exc);
 
         } catch (CustomerNotFoundException exc) {
-            System.out.println("Customer not found.");
+            errorMessageHandler.showErrorMsg("No customer with phone number: " + exc.getMessage() + " could be found");
             logger.logException(exc);
+
+        } catch (Exception exc) {
+            errorMessageHandler.showErrorMsg("Technical error");
+            logger.logException(exc);
+
+        } 
     }
 
 
@@ -200,3 +203,4 @@ public class View {
         searchForCustomer(666);
     }
 }
+
