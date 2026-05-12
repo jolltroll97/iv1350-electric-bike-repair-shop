@@ -1,0 +1,20 @@
+2026-05-12T13:43:18.733226, Exception thrown
+se.kth.iv1350.repairshop.controller.OperationFailedException: Noooo
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:63)
+	at se.kth.iv1350.repairshop.view.View.searchForCustomer(View.java:107)
+	at se.kth.iv1350.repairshop.view.View.alternateFlow(View.java:202)
+	at se.kth.iv1350.repairshop.startup.Main.main(Main.java:33)
+Caused by: se.kth.iv1350.repairshop.integration.DatabaseFailureException: Cannot access customer database server
+	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:34)
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
+	... 3 more
+2026-05-12T13:47:47.346046, Exception thrown
+se.kth.iv1350.repairshop.controller.OperationFailedException: Noooo
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:63)
+	at se.kth.iv1350.repairshop.view.View.searchForCustomer(View.java:107)
+	at se.kth.iv1350.repairshop.view.View.alternateFlow(View.java:202)
+	at se.kth.iv1350.repairshop.startup.Main.main(Main.java:33)
+Caused by: se.kth.iv1350.repairshop.integration.DatabaseFailureException: Cannot access customer database server
+	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:34)
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
+	... 3 more

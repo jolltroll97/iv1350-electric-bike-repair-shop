@@ -32,8 +32,8 @@ public class View {
      */
     public View(Controller contr, LogHandler logger, ErrorMessageHandler errorMessageHandler) {
         this.contr = contr;
-        this.logger = new LogHandler();
-        this.errorMessageHandler = new ErrorMessageHandler();
+        this.logger = logger;
+        this.errorMessageHandler = errorMessageHandler;
     }
 
     private String bikeDTOToString(BikeDTO bikeDTO){
@@ -108,7 +108,6 @@ public class View {
 
         } catch (CustomerNotFoundException exc) {
             errorMessageHandler.showErrorMsg("No customer with phone number: " + exc.getMessage() + " could be found");
-            logger.logException(exc);
 
         } catch (Exception exc) {
             errorMessageHandler.showErrorMsg("Technical error");
