@@ -46,7 +46,7 @@ public class RepairOrderTest {
         taskList.add(task2);
         taskList.add(task3);
 
-        int result = testOrder.calculateTotal(taskList);
+        double result = testOrder.calculateTotal(taskList);
 
         assertEquals(500, result, "The calculated total cost was incorrect.");
     }
@@ -54,7 +54,7 @@ public class RepairOrderTest {
     @Test
     void testCalculateTotalWithEmptyList() {
         ArrayList<RepairTaskDTO> emptyList = new ArrayList<>();
-        int result = testOrder.calculateTotal(emptyList);
+        double result = testOrder.calculateTotal(emptyList);
         assertEquals(0, result, "An empty task list should cost 0.");
     }
 

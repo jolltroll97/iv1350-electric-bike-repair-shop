@@ -6,7 +6,7 @@ public class RepairOrderDTO {
 
     private final DiagnosticReportDTO reportDTO;
     private final int date;
-    private final int totalCost;
+    private final double totalCost;
     private final String repairReport;
     private final String state;
     private final CustomerDTO customer;
@@ -32,7 +32,7 @@ public class RepairOrderDTO {
      * @param repairId          Unique identification number for the repair order.
      */
 
-    public RepairOrderDTO(DiagnosticReportDTO reportDTO, int date, int totalCost, String repairReport, String state, CustomerDTO customer, int repairId){
+    public RepairOrderDTO(DiagnosticReportDTO reportDTO, int date, double totalCost, String repairReport, String state, CustomerDTO customer, int repairId){
         this.reportDTO = reportDTO;
         this.date = date;
         this.totalCost = totalCost;
@@ -54,7 +54,7 @@ public class RepairOrderDTO {
         return date;
     }
 
-    public int getTotalCost(){
+    public double getTotalCost(){
         return totalCost;
     }
 

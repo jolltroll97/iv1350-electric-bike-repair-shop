@@ -4,6 +4,8 @@ import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 import se.kth.iv1350.repairshop.integration.RepairOrderRegistry;
+import se.kth.iv1350.repairshop.model.DiscountStrategy;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -14,24 +16,30 @@ import java.util.ArrayList;
 public class RepairOrder {
 
     private RepairOrderRegistry repairOrderRegistry;
+    private DiscountStrategy strategy;
     
+
+    public RepairOrder(RepairOrderRegistry repairOrderRegistry){
+        this.repairOrderRegistry = repairOrderRegistry;
+    }
+
     /**
      * Calculates the total cost of all repair tasks in the order.
      * 
      * @param cost An array of RepairTaskDTO objects representing the tasks to be performed.
      * @return The total cost as an integer, representing the sum of all task costs.
      */
-    public RepairOrder(RepairOrderRegistry repairOrderRegistry){
-        this.repairOrderRegistry = repairOrderRegistry;
-    }
-    public int calculateTotal(ArrayList<RepairTaskDTO> cost) {
-        int totalCost = 0;
+    public double calculateTotal(ArrayList<RepairTaskDTO> cost) {
+        double totalCost = 0;
         // Iterate through each repair task
         for (RepairTaskDTO task : cost) {
             // Add the cost of the current task to the running total
             totalCost += task.getCost();
         }
+
+        totalCost = strategy.addSeasonalDiscount(totalCost);
         return totalCost;
+
     }
 
     public DiagnosticReportDTO addDiagnosticReport(RepairTaskDTO repairTask, int repairOrderId){
