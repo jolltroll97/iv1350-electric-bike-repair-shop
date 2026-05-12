@@ -72,9 +72,9 @@ public class RepairOrderRegistry{
      * Retrieves a list of repair orders that are in a specific state.
      * @param state The state of the repair orders to retrieve (e.g. "Awaiting Diagnostic").
      */
-    public List<RepairOrderDTO> retrieveRepairOrderList(String state){
+    public ArrayList<RepairOrderDTO> retrieveRepairOrderList(String state){
 
-        List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
+        ArrayList<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO searchRepairOrders : repairOrders){
             if(searchRepairOrders.getState().equalsIgnoreCase(state)){
