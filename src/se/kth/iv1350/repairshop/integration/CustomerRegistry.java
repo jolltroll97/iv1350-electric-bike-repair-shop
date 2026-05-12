@@ -9,10 +9,12 @@ import java.util.List;
  * A registry for managing customer information.
  */
 public class CustomerRegistry {
-    
+
+    private static final CustomerRegistry INSTANCE = new CustomerRegistry();
+
     private List<CustomerDTO> customers = new ArrayList<>();
 
-    public CustomerRegistry(){
+    private CustomerRegistry(){
         BikeDTO bikeOne = new BikeDTO("Crescent", "Elody", "1234");
         BikeDTO bikeTwo = new BikeDTO("Crescent", "Elist", "1235");
         BikeDTO bikeThree = new BikeDTO("Crescent", "Eli", "1236");
@@ -20,6 +22,15 @@ public class CustomerRegistry {
         this.customers.add(new CustomerDTO("Douglas Andersson", 701234566, "douglas.andersson0@gmail.com", bikeOne));
         this.customers.add(new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", bikeTwo));
         this.customers.add(new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", bikeThree));
+    }
+
+    /**
+     * Gets the only instance of the customer registry (singleton implementation)
+     * @return  The singleton instance of CustomerRegistry.
+     */
+
+    public static CustomerRegistry getInstance(){
+        return INSTANCE;
     }
 
     /**
