@@ -29,7 +29,7 @@ public class View {
     public View(Controller contr, LogHandler logger, ErrorMessageHandler errorMessageHandler) {
         this.contr = contr;
         this.logger = logger;
-        this.errorMessageHandler = errorMessageHandler;
+        this.errorMessageHandler = new ErrorMessageHandler();
     }
 
 
@@ -93,6 +93,7 @@ public class View {
 
         } catch (CustomerNotFoundException exc) {
             errorMessageHandler.showErrorMsg("No customer with phone number: " + exc.getMessage() + " could be found");
+            logger.logException(exc);
 
         } catch (Exception exc) {
             errorMessageHandler.showErrorMsg("Technical error");
@@ -105,6 +106,8 @@ public class View {
     /**
      * Performs fake user executions.
      */
+
+    /*
     public void sampleExecution() {
         try {
             System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
@@ -170,7 +173,7 @@ public class View {
             logger.logException(exc);
         }
     }
-
+    */
     public void alternateFlow(){
         try {
             System.out.println("\n--- STARTING ALTERNATE FLOW ---\n");
