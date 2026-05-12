@@ -33,7 +33,7 @@ public class View {
     public View(Controller contr, LogHandler logger, ErrorMessageHandler errorMessageHandler) {
         this.contr = contr;
         this.logger = logger;
-        this.errorMessageHandler = errorMessageHandler;
+        this.errorMessageHandler = new ErrorMessageHandler();
     }
 
     private String bikeDTOToString(BikeDTO bikeDTO){
@@ -108,6 +108,7 @@ public class View {
 
         } catch (CustomerNotFoundException exc) {
             errorMessageHandler.showErrorMsg("No customer with phone number: " + exc.getMessage() + " could be found");
+            logger.logException(exc);
 
         } catch (Exception exc) {
             errorMessageHandler.showErrorMsg("Technical error");
@@ -120,6 +121,8 @@ public class View {
     /**
      * Performs fake user executions.
      */
+
+    /*
     public void sampleExecution() {
         System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
         
@@ -185,7 +188,7 @@ public class View {
         contr.customerResponse(true, finalReport);
         
     }
-
+    */
     public void alternateFlow(){
         System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
 

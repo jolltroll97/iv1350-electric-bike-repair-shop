@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import se.kth.iv1350.repairshop.integration.CustomerRegistry;
+import se.kth.iv1350.repairshop.integration.CustomerNotFoundException;
+import se.kth.iv1350.repairshop.integration.DatabaseFailureException;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
 
 /**
- * Since there is only one method to test, @BeforeAll and @AfterAll has been omitted.
+ * 
  */
 
 public class CustomerRegistryTest {
@@ -27,7 +29,7 @@ public class CustomerRegistryTest {
     }
 
     @Test
-    public void testFindCustomer() {
+    public void testFindCustomer() throws Exception {
         System.out.println(">>> RUNNING TEST: findCustomer <<<");
 
         int phoneNumSearch = 701234566; // Douglas Andersson
@@ -39,13 +41,34 @@ public class CustomerRegistryTest {
     }
 
     @Test
-    public void testFindCustomerThatDoesNotExist() {
-        System.out.println(">>> RUNNING TEST: findCustomerThatDoesNotExist <<<");
+    public void testFindCustomerThrowsCustomerNotFoundException() {
+        System.out.println(">>> RUNNING TEST: findCustomerThrowsCustomerNotFoundException <<<");
 
-        
-        int fakePhone = 999999999; // Fake phone number
-        CustomerDTO foundCustomer = testRegistry.findCustomer(fakePhone);
+        int fakePhone = 999999999;
 
-        assertNull(foundCustomer, "The registry should have returned null for a fake number, but it returned a customer!");
+        CustomerNotFoundException exception = assertThrows(
+            CustomerNotFoundException.class, 
+            () -> testRegistry.findCustomer(fakePhone),
+            "Expected findCustomer to throw CustomerNotFoundException, but it didn't."
+        );
+
+        assertEquals(String.valueOf(fakePhone), exception.getSearchedPhoneNumber(), 
+            "The exception did not store the correct phone number.");
+    }
+
+    @Test
+    public void testFindCustomerThrowsDatabaseFailureException() {
+        System.out.println(">>> RUNNING TEST: findCustomerThrowsDatabaseFailureException <<<");
+
+        int poisonPillPhoneNum = 666;
+
+        DatabaseFailureException exception = assertThrows(
+            DatabaseFailureException.class,
+            () -> testRegistry.findCustomer(poisonPillPhoneNum),
+            "Expected findCustomer to throw DatabaseFailureException for phone number 666."
+        );
+
+        assertTrue(exception.getMessage().contains("Cannot access"), 
+            "The exception message should mention the lost connection.");
     }
 }

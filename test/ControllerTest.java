@@ -54,7 +54,7 @@ public class ControllerTest {
      * Verifies that the correct customer data is fetched from the registry.
      */
     @Test
-    void testRetrieveCustomerInfo() {
+    void testRetrieveCustomerInfo() throws Exception{
         System.out.println(">>> RUNNING TEST: retrieveCustomerInfo <<<");
         
         int phoneToSearch = 701234566; // Douglas Andersson
