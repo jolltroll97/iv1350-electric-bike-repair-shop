@@ -4,6 +4,9 @@ import se.kth.iv1350.repairshop.integration.RegistryCreator;
 import se.kth.iv1350.repairshop.integration.Printer;
 import se.kth.iv1350.repairshop.controller.Controller;
 import se.kth.iv1350.repairshop.view.View;
+import se.kth.iv1350.repairshop.util.LogHandler;
+import se.kth.iv1350.repairshop.view.ErrorMessageHandler;
+import java.io.IOException;
 
 public class Main {
     
@@ -12,14 +15,26 @@ public class Main {
  * @param args   The application does not take any command line aparameters.
  */
     public static void main(String[] args) {
+        
+        try{
         RegistryCreator creator = new RegistryCreator();
 
         Printer printer = new Printer();
 
         Controller contr = new Controller(creator, printer);
 
-        View view = new View(contr);
+        LogHandler logger = new LogHandler();
 
-        view.sampleExecution();
+        ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
+
+        View view = new View(contr, logger, errorMessageHandler);
+
+        //view.sampleExecution();
+        view.alternateFlow();
+        }
+
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 }
