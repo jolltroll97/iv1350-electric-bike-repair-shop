@@ -30,6 +30,7 @@ public class RepairOrder {
      * @return The total cost as an integer, representing the sum of all task costs.
      */
     public double calculateTotal(ArrayList<RepairTaskDTO> cost) {
+        
         double totalCost = 0;
         // Iterate through each repair task
         for (RepairTaskDTO task : cost) {
