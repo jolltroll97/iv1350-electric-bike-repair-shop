@@ -2,8 +2,11 @@ package se.kth.iv1350.repairshop.startup;
 
 import se.kth.iv1350.repairshop.integration.RegistryCreator;
 import se.kth.iv1350.repairshop.integration.Printer;
+import se.kth.iv1350.repairshop.integration.RepairOrderRegistry;
 import se.kth.iv1350.repairshop.controller.Controller;
 import se.kth.iv1350.repairshop.view.View;
+import se.kth.iv1350.repairshop.view.RepairOrderView;
+import se.kth.iv1350.repairshop.integration.RepairOrderLogger;
 import se.kth.iv1350.repairshop.util.LogHandler;
 import se.kth.iv1350.repairshop.view.ErrorMessageHandler;
 import java.io.IOException;
@@ -29,8 +32,11 @@ public class Main {
 
         View view = new View(contr, logger, errorMessageHandler);
 
-        //view.sampleExecution();
-        view.alternateFlow();
+        RepairOrderRegistry repairOrderRegistry = creator.getRepairOrderRegistry();
+        repairOrderRegistry.addObserver(new RepairOrderView());
+        repairOrderRegistry.addObserver(new RepairOrderLogger());
+        
+        view.sampleExecution();
         }
 
         catch (IOException ex){
