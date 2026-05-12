@@ -50,13 +50,17 @@ public class RegistryCreatorTest {
     }
     
     @Test
-    public void testDifferentRegistryCreatorInstancesHaveDifferentRegistries() {
-        RegistryCreator anotherInstance = new RegistryCreator();
+    public void testRegistryCreatorReturnsSingletonInstance() {
         
-        CustomerRegistry firstCustomerRegistry = instance.getCustomerRegistry();
-        CustomerRegistry secondCustomerRegistry = anotherInstance.getCustomerRegistry();
+        RegistryCreator firstCreator = new RegistryCreator();
+        RegistryCreator secondCreator = new RegistryCreator();
         
-        assertNotSame(firstCustomerRegistry, secondCustomerRegistry,
-                      "Different RegistryCreator instances should have different CustomerRegistry instances");
+        
+        CustomerRegistry firstCustomerRegistry = firstCreator.getCustomerRegistry();
+        CustomerRegistry secondCustomerRegistry = secondCreator.getCustomerRegistry();
+        
+        
+        assertSame(firstCustomerRegistry, secondCustomerRegistry,
+                   "Because CustomerRegistry is a Singleton, both creators should return the exact same instance.");
     }
 }

@@ -192,15 +192,15 @@ public class View {
     public void alternateFlow(){
         System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
 
-        // SCENARIO 1: A normal, successful search (from your hardcoded list)
+        // A normal & successful search
         System.out.println("1. Cashier searches for valid customer (701234566):");
         searchForCustomer(701234566); 
 
-        // SCENARIO 2: The Alternate Flow (Customer not found)
+        // Customer not found
         System.out.println("\n2. Cashier searches for non-existent customer (999999999):");
         searchForCustomer(999999999); 
 
-        // SCENARIO 3: The System Failure (Database crash)
+        // Database failure
         System.out.println("\n3. Cashier searches while database is down (666):");
         searchForCustomer(666);
     }

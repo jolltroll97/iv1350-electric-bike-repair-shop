@@ -20,7 +20,7 @@ public class CustomerRegistryTest {
 
     @BeforeEach
     public void setUp(){
-        testRegistry = new CustomerRegistry();
+        testRegistry = CustomerRegistry.getInstance();
     }
 
     @AfterEach

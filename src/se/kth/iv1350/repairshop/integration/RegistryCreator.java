@@ -9,7 +9,7 @@ public class RegistryCreator {
      * Creates new instances of the registries available in the database.
      */
     public RegistryCreator(){
-        this.customerRegistry = new CustomerRegistry();
+        this.customerRegistry = CustomerRegistry.getInstance();
         this.repairOrderRegistry = new RepairOrderRegistry();
     }
 
