@@ -2,8 +2,10 @@ package se.kth.iv1350.repairshop.integration;
 import se.kth.iv1350.repairshop.dto.BikeDTO;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *  This class represents the registry for repair orders.
@@ -14,26 +16,31 @@ import java.util.List;
  */
 public class RepairOrderRegistry{
 
-    private ArrayList<RepairOrderDTO> repairOrders = new ArrayList<>();
+    private static final String DEFAULT_BRAND = "Crescent";
+    private static final String DEFAULT_STATE_NEWLY_CREATED = "Newly created";
+
+    private List<RepairOrderDTO> repairOrders = new ArrayList<>();
     private int repairId = 4; 
+    private Set<RepairOrderObserver> observers = new HashSet<>();
 
     public RepairOrderRegistry(){
+
         /**
          * Fake customer data since there is no database to pull from
          */
 
         //String brand, String model, String serialNum
-        BikeDTO bikeOne = new BikeDTO("Crescent", "Elody", "1234");
-        BikeDTO bikeTwo = new BikeDTO("Crescent", "Elist", "1235");
-        BikeDTO bikeThree = new BikeDTO("Crescent", "Eli", "1236");
+        BikeDTO bikeOne = new BikeDTO(DEFAULT_BRAND, "Elody", "1234");
+        BikeDTO bikeTwo = new BikeDTO(DEFAULT_BRAND, "Elist", "1235");
+        BikeDTO bikeThree = new BikeDTO(DEFAULT_BRAND, "Eli", "1236");
         
         CustomerDTO customerOne = new CustomerDTO("Douglas Andersson", 701234566, "douglas.andersson0@gmail.com", bikeOne);
         CustomerDTO customerTwo = new CustomerDTO("Linus Sandin", 702345677, "linus.sandin1@gmail.com", bikeTwo);
         CustomerDTO customerThree = new CustomerDTO("Liza Rudaya", 703456777, "liza.rudaya@gmail.com", bikeThree);
         
         this.repairOrders.add(new RepairOrderDTO(null, 20260426, 10250, "Det mesta behöver bytas", "Ready for approval", customerOne, 1));
-        this.repairOrders.add(new RepairOrderDTO(null, 20260427, 1650, "Punktering, rostiga bromsar", "Newly created", customerTwo, 2));
-        this.repairOrders.add(new RepairOrderDTO(null, 20260428, 3550, "Rullar dåligt, kan vara kullagerna", "Newly created", customerThree, 3));
+        this.repairOrders.add(new RepairOrderDTO(null, 20260427, 1650, "Punktering, rostiga bromsar", DEFAULT_STATE_NEWLY_CREATED, customerTwo, 2));
+        this.repairOrders.add(new RepairOrderDTO(null, 20260428, 3550, "Rullar dåligt, kan vara kullagerna", DEFAULT_STATE_NEWLY_CREATED, customerThree, 3));
     }
 
     /**
@@ -49,13 +56,14 @@ public class RepairOrderRegistry{
             date,
             0,
             repairReport,
-            "Newly created", 
+            DEFAULT_STATE_NEWLY_CREATED, 
             customer,
             repairId
 
         );
 
         repairOrders.add(currentRepairOrder);
+        notifyObserversCreated(currentRepairOrder);
         return repairId++;
   
     }
@@ -64,9 +72,9 @@ public class RepairOrderRegistry{
      * Retrieves a list of repair orders that are in a specific state.
      * @param state The state of the repair orders to retrieve (e.g. "Awaiting Diagnostic").
      */
-    public ArrayList<RepairOrderDTO> retrieveRepairOrderList(String state){
+    public List<RepairOrderDTO> retrieveRepairOrderList(String state){
 
-        ArrayList<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
+        List<RepairOrderDTO> stateListRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO searchRepairOrders : repairOrders){
             if(searchRepairOrders.getState().equalsIgnoreCase(state)){
@@ -89,6 +97,7 @@ public class RepairOrderRegistry{
             if(repairOrders.get(i).getRepairId() == newRepairOrder.getRepairId()){
 
                 repairOrders.set(i, newRepairOrder);
+                notifyObserversUpdated(newRepairOrder);
 
             }
 
@@ -138,9 +147,9 @@ public class RepairOrderRegistry{
      * @param phoneNum The phone number to search for (associated with the customer of the repair orders).
      * @return A list of repair orders associated with the provided phone number.
      */
-    public ArrayList<RepairOrderDTO> getByPhoneNum(int phoneNum){
+    public List<RepairOrderDTO> getByPhoneNum(int phoneNum){
 
-        ArrayList <RepairOrderDTO> foundRepairOrders = new ArrayList<>();
+        List<RepairOrderDTO> foundRepairOrders = new ArrayList<>();
 
         for(RepairOrderDTO customerRepairOrder : repairOrders){
 
@@ -152,6 +161,30 @@ public class RepairOrderRegistry{
 
         return foundRepairOrders;
 
+    }
+    
+    public void addObserver(RepairOrderObserver observer) {
+        if (observer != null) {
+            observers.add(observer);
+        }
+    }
+    
+    public void removeObserver(RepairOrderObserver observer) {
+        if (observer != null) {
+            observers.remove(observer);
+        }
+    }
+    
+    private void notifyObserversCreated(RepairOrderDTO repairOrder) {
+        for (RepairOrderObserver observer : observers) {
+            observer.repairOrderCreated(repairOrder);
+        }
+    }
+    
+    private void notifyObserversUpdated(RepairOrderDTO repairOrder) {
+        for (RepairOrderObserver observer : observers) {
+            observer.repairOrderUpdated(repairOrder);
+        }
     }
 
 }
