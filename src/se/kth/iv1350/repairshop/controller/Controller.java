@@ -1,5 +1,7 @@
 package se.kth.iv1350.repairshop.controller;
 
+import java.lang.Exception;
+
 import se.kth.iv1350.repairshop.integration.RegistryCreator;
 import se.kth.iv1350.repairshop.integration.CustomerRegistry;
 import se.kth.iv1350.repairshop.integration.RepairOrderRegistry;
@@ -52,9 +54,14 @@ public class Controller {
      * @throws CustomerNotFoundException if the customer cannot be found in the database.
      * @throws DatabaseFailureException if the database cannot be reached.
      */
-    public CustomerDTO retrieveCustomerInfo(int phoneNum)throws CustomerNotFoundException, DatabaseFailureException{
+    public CustomerDTO retrieveCustomerInfo(int phoneNum)throws CustomerNotFoundException, OperationFailedException{
 
+        try {
         return this.customerRegistry.findCustomer(phoneNum);
+        }
+        catch (DatabaseFailureException dbExc){
+            throw new OperationFailedException("Noooo", dbExc);
+        }
     }
 
     /**
