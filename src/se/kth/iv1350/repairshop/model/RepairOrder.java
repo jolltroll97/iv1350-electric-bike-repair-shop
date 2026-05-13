@@ -23,6 +23,10 @@ public class RepairOrder {
         this.repairOrderRegistry = repairOrderRegistry;
     }
 
+    /**
+     * Sets the discount strategy for the repair order.
+     * @param strategy The discount strategy to be used.
+     */
     public void setDiscountStrategy(DiscountStrategy strategy) {
         this.strategy = strategy;
     }
@@ -32,6 +36,7 @@ public class RepairOrder {
      * 
      * @param cost An array of RepairTaskDTO objects representing the tasks to be performed.
      * @return The total cost as an integer, representing the sum of all task costs.
+     * applies any active discount strategy to the total cost before returning it.
      */
     public double calculateTotal(ArrayList<RepairTaskDTO> cost) {
         
