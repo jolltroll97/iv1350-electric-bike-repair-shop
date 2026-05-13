@@ -16,11 +16,15 @@ import java.util.ArrayList;
 public class RepairOrder {
 
     private RepairOrderRegistry repairOrderRegistry;
-    private DiscountStrategy strategy;
+    private DiscountStrategy strategy = new NoDiscount();
     
 
     public RepairOrder(RepairOrderRegistry repairOrderRegistry){
         this.repairOrderRegistry = repairOrderRegistry;
+    }
+
+    public void setDiscountStrategy(DiscountStrategy strategy) {
+        this.strategy = strategy;
     }
 
     /**
@@ -38,8 +42,8 @@ public class RepairOrder {
             totalCost += task.getCost();
         }
 
-        totalCost = strategy.addSeasonalDiscount(totalCost);
-        return totalCost;
+        return strategy.applyDiscount(totalCost);
+        
 
     }
 
