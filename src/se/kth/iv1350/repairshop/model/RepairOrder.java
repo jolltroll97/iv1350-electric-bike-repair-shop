@@ -47,7 +47,7 @@ public class RepairOrder {
         
         // Fetch the correct data using the current ID
         RepairOrderDTO orderDTO = this.repairOrderRegistry.getById(repairOrderId);
-       
+
         // Extract the diagnostic report
         DiagnosticReportDTO existingReportDTO = orderDTO.getReportDTO();
 

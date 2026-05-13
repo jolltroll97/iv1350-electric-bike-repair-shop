@@ -16,6 +16,7 @@ public class SeasonalDiscount implements DiscountStrategy {
 
     }
 
+    @Override
     public double addSeasonalDiscount(double totalCost){
         if(isSeasonalPeriod()){
             return totalCost * 0.8;
