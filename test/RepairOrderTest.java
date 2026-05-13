@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import se.kth.iv1350.repairshop.model.NoDiscount;
 import se.kth.iv1350.repairshop.model.RepairOrder;
 import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
@@ -14,6 +15,7 @@ import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
 import se.kth.iv1350.repairshop.integration.RegistryCreator;
 import se.kth.iv1350.repairshop.integration.RepairOrderRegistry;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RepairOrderTest {
