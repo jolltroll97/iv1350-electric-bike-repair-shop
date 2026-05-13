@@ -24,6 +24,7 @@ public class RepairOrder {
     public RepairOrder(RepairOrderRegistry repairOrderRegistry){
         this.repairOrderRegistry = repairOrderRegistry;
     }
+
     public int calculateTotal(ArrayList<RepairTaskDTO> cost) {
         int totalCost = 0;
         // Iterate through each repair task
@@ -38,7 +39,7 @@ public class RepairOrder {
         
         // Fetch the correct data using the current ID
         RepairOrderDTO orderDTO = this.repairOrderRegistry.getById(repairOrderId);
-       
+    
         // Extract the diagnostic report
         DiagnosticReportDTO existingReportDTO = orderDTO.getReportDTO();
 
@@ -52,7 +53,7 @@ public class RepairOrder {
         ArrayList<RepairTaskDTO> currentTasks = reportModel.getRepairTasksList();
 
         int totalTime = reportModel.calculateTotalTime(currentTasks);
-
+        
         DiagnosticReportDTO updatedReportDTO = new DiagnosticReportDTO(currentTasks, totalTime);
 
         return updatedReportDTO;
@@ -68,7 +69,7 @@ public class RepairOrder {
         RepairOrderDTO updatedOrder = new RepairOrderDTO(
             reportDTO,
             oldOrder.getDate(),
-            oldOrder.getTotalCost(), 
+            calculateTotal(reportDTO.getRepairTasksList()),
             oldOrder.getRepairReport(),
             oldOrder.getState(),
             oldOrder.getCustomer(),
