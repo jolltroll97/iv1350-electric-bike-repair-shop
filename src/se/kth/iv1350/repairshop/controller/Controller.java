@@ -60,7 +60,7 @@ public class Controller {
         return this.customerRegistry.findCustomer(phoneNum);
         }
         catch (DatabaseFailureException dbExc){
-            throw new OperationFailedException("Noooo", dbExc);
+            throw new OperationFailedException("Cannot access customer database server", dbExc);
         }
     }
 
