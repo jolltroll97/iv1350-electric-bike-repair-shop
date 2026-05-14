@@ -2,6 +2,7 @@ package se.kth.iv1350.repairshop.view;
 
 import se.kth.iv1350.repairshop.controller.Controller;
 import se.kth.iv1350.repairshop.util.LogHandler;
+import se.kth.iv1350.repairshop.dto.BikeDTO;
 import se.kth.iv1350.repairshop.dto.CustomerDTO;
 import se.kth.iv1350.repairshop.dto.DiagnosticReportDTO;
 import se.kth.iv1350.repairshop.dto.RepairOrderDTO;
@@ -9,6 +10,7 @@ import se.kth.iv1350.repairshop.dto.RepairTaskDTO;
 import se.kth.iv1350.repairshop.integration.CustomerNotFoundException;
 
 import java.util.List;
+import static java.lang.System.out;
 
 /**
  * Placeholder for the real view.
@@ -99,75 +101,65 @@ public class View {
             errorMessageHandler.showErrorMsg("Technical error");
             logger.logException(exc);
 
-        } 
+        }
     }
 
 
     /**
      * Performs fake user executions.
      */
-
-    
     public void sampleExecution() {
         try {
-            System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
-            
-            // --- Workflow points 1-6 ---
-            // Customer walks in, and talks to the receptionist.
-            CustomerDTO mrAndersson = contr.retrieveCustomerInfo(701234566);
-            // --- Workflow points 7-8 ---
-            // Customer verifies the info.
-            System.out.println("--- Method: retrieveCustomerInfo ---");
-            System.out.println(customerDTOToString(mrAndersson));
-            System.out.println("\n");
+        System.out.println("\n--- STARTING SAMPLE EXECUTION ---\n");
+        
+        // --- Workflow points 1-6 ---
+        CustomerDTO mrAndersson = contr.retrieveCustomerInfo(701234566);
 
-            // --- Workflow points 9-11 ---
-            // Receptionist asks for problem description, and creates a repair order.
-            int newRepairOrder = contr.createRepairOrder(mrAndersson, 20260429, "Broken chain, battery dead");
-            // Print the returned ID
-            System.out.println("--- Method: createRepairOrder ---");
-            System.out.println(newRepairOrder);
-            System.out.println("\n");
+        // --- Workflow points 7-8 ---
+        out.println("--- Method: retrieveCustomerInfo ---");
+        printCustomer(mrAndersson);
+        out.println("\n");
 
-            // --- Workflow points 12-14 ---
-            // Customer waits. Technician asks system for repair order.
-            List<RepairOrderDTO> pendingRepairOrders = contr.retrieveRepairOrderList("Newly created");
-            // Print the returned list.
-            System.out.println("--- Method: retrieveRepairOrderList ---");
-            for (RepairOrderDTO order : pendingRepairOrders){
-                System.out.println(repairOrderDTOToString(order));
-                System.out.println("\n");
-            }
-            
-            // Technician selects the correct repair order (by saving the ID).
-            // The ID is returned when the new repair report is created, 
-            // and also shows up in the list "pendingRepairOrders"
-            int selectedRepairOrder = newRepairOrder;
+        // --- Workflow points 9-11 ---
+        int newRepairOrder = contr.createRepairOrder(mrAndersson, 20260429, "Broken chain, battery dead");
+        out.println("--- Method: createRepairOrder ---");
+        out.println("New Order ID: " + newRepairOrder);
+        out.println("\n");
 
-            // --- Workflow points 15-17 ---
-            // Technician performs diagnostic, and adds repair tasks.
-            RepairTaskDTO taskOne = new RepairTaskDTO("Change chain", 750, 30);
-            RepairTaskDTO taskTwo = new RepairTaskDTO("Change battery", 3000, 45);
-            // Adding task one
-            DiagnosticReportDTO reportDTOFirst = contr.addDiagnosticReport(taskOne, selectedRepairOrder);
-            // Print the returned DiagnosticReportDTO (1)
-            System.out.println("--- Method: addDiagnosticReport (first task)---");
-            System.out.println(diagnosticReportDTOToString(reportDTOFirst));
-            System.out.println("\n");
-            // Update the repair order (1)
-            contr.updateRepairOrder(reportDTOFirst, selectedRepairOrder);
-            // Adding task two
-            DiagnosticReportDTO reportDTOSecond = contr.addDiagnosticReport(taskTwo, selectedRepairOrder);
-            // Print the returned DiagnosticReportDTO (2)
-            System.out.println("--- Method: addDiagnosticReport (second task)---");
-            System.out.println(diagnosticReportDTOToString(reportDTOSecond));
-            System.out.println("\n");
-            // Update the repair order (2)
-            contr.updateRepairOrder(reportDTOSecond, selectedRepairOrder);
+        // --- Workflow points 12-14 ---
+        List<RepairOrderDTO> pendingRepairOrders = contr.retrieveRepairOrderList("Newly created");
+        out.println("--- Method: retrieveRepairOrderList ---");
+        for (RepairOrderDTO order : pendingRepairOrders){
+            printRepairOrder(order);
+            out.println("\n");
+        }
+        
+        int selectedRepairOrder = newRepairOrder;
 
-            // --- Workflow point: 18-23 ---
-            RepairOrderDTO finalReport = contr.getById(newRepairOrder);
-            contr.customerResponse(true, finalReport);
+        // --- Workflow points 15-17 ---
+        RepairTaskDTO taskOne = new RepairTaskDTO("Change chain", 750, 30);
+        RepairTaskDTO taskTwo = new RepairTaskDTO("Change battery", 3000, 45);
+
+        // Adding task one
+        DiagnosticReportDTO reportDTOFirst = contr.addDiagnosticReport(taskOne, selectedRepairOrder);
+        out.println("--- Method: addDiagnosticReport (first task)---");
+        printDiagnosticReport(reportDTOFirst);
+        out.println("\n");
+        contr.updateRepairOrder(reportDTOFirst, selectedRepairOrder);
+
+        // Adding task two
+        DiagnosticReportDTO reportDTOSecond = contr.addDiagnosticReport(taskTwo, selectedRepairOrder);
+        out.println("--- Method: addDiagnosticReport (second task)---");
+        printDiagnosticReport(reportDTOSecond);
+        out.println("\n");
+        contr.updateRepairOrder(reportDTOSecond, selectedRepairOrder);
+
+        // --- Workflow point: 18-23 ---
+        out.println("--- Final Repair Order ---");
+        RepairOrderDTO finalReport = contr.getById(newRepairOrder);
+        contr.customerResponse(true, finalReport);
+
+        //printRepairOrder(finalReport);
         } catch (Exception exc) {
             errorMessageHandler.showErrorMsg("Error during sample execution: " + exc.getMessage());
             logger.logException(exc);
@@ -193,5 +185,47 @@ public class View {
             errorMessageHandler.showErrorMsg("Error during alternate flow: " + exc.getMessage());
             logger.logException(exc);
         }
+    }
+
+        // --- Hjälpmetoder för snygg formatering ---
+
+    private void printCustomer(CustomerDTO customer) {
+        out.println("Customer Name: " + customer.getName());
+        out.println("Phone: " + customer.getPhoneNum());
+        out.println("Email: " + customer.getEmail());
+        printBike(customer.getBikeDTO());
+    }
+
+    private void printBike(BikeDTO bike) {
+        out.println("Brand: " + bike.getBrand());
+        out.println("Model: " + bike.getModel());
+        out.println("Serial Number: " + bike.getSerialNum());
+    }
+
+    private void printRepairOrder(RepairOrderDTO order) {
+    
+        printCustomer(order.getCustomer());
+        out.println("Repair ID: " + order.getRepairId());
+        out.println("Date: " + order.getDate());
+        out.println("Status: " + order.getState());
+        out.println("Total Cost: " + order.getTotalCost() + " SEK");
+        out.println("Repair Report: " + order.getRepairReport());
+        if(order.getReportDTO() != null){
+            printDiagnosticReport(order.getReportDTO());
+        }
+    }
+
+    private void printRepairTasks(List<RepairTaskDTO> tasks) {
+        for (RepairTaskDTO task : tasks) {
+            out.println("Task: " + task.getDescription());
+            out.println("Cost: " + task.getCost() + " SEK");
+            out.println("Time: " + task.getTime() + " min");
+        }
+    }
+
+    private void printDiagnosticReport(DiagnosticReportDTO report) {
+        printRepairTasks(report.getRepairTasksList());
+        out.println("Total Time: " + report.getTotalTime() + " min");
+        
     }
 }
