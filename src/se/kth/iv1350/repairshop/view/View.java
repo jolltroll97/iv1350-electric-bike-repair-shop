@@ -167,24 +167,21 @@ public class View {
     }
     
     public void alternateFlow(){
-        try {
+        
             System.out.println("\n--- STARTING ALTERNATE FLOW ---\n");
 
-            // SCENARIO 1: A normal, successful search (from your hardcoded list)
+            // A normal, successful search
             System.out.println("1. Cashier searches for valid customer (701234566):");
             searchForCustomer(701234566); 
 
-            // SCENARIO 2: The Alternate Flow (Customer not found)
+            // The Alternate Flow (Customer not found)
             System.out.println("\n2. Cashier searches for non-existent customer (999999999):");
             searchForCustomer(999999999); 
 
-            // SCENARIO 3: The System Failure (Database crash)
+            // System Failure (Database crash)
             System.out.println("\n3. Cashier searches while database is down (666):");
             searchForCustomer(666);
-        } catch (Exception exc) {
-            errorMessageHandler.showErrorMsg("Error during alternate flow: " + exc.getMessage());
-            logger.logException(exc);
-        }
+        
     }
 
         // --- Hjälpmetoder för snygg formatering ---
