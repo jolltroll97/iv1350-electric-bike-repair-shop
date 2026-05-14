@@ -83,3 +83,37 @@ Caused by: se.kth.iv1350.repairshop.integration.DatabaseFailureException: Cannot
 	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:45)
 	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
 	... 3 more
+2026-05-14T16:11:56.463862, Exception thrown
+se.kth.iv1350.repairshop.integration.CustomerNotFoundException: Could not find a customer with phone number: 999999999
+	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:56)
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
+	at se.kth.iv1350.repairshop.view.View.searchForCustomer(View.java:94)
+	at se.kth.iv1350.repairshop.view.View.alternateFlow(View.java:179)
+	at se.kth.iv1350.repairshop.startup.Main.main(Main.java:40)
+2026-05-14T16:11:56.468861, Exception thrown
+se.kth.iv1350.repairshop.controller.OperationFailedException: Cannot access customer database server
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:63)
+	at se.kth.iv1350.repairshop.view.View.searchForCustomer(View.java:94)
+	at se.kth.iv1350.repairshop.view.View.alternateFlow(View.java:183)
+	at se.kth.iv1350.repairshop.startup.Main.main(Main.java:40)
+Caused by: se.kth.iv1350.repairshop.integration.DatabaseFailureException: Cannot access customer database server
+	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:45)
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
+	... 3 more
+2026-05-14T16:55:02.495293, Exception thrown
+se.kth.iv1350.repairshop.integration.CustomerNotFoundException: Could not find a customer with phone number: 999999999
+	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:56)
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
+	at se.kth.iv1350.repairshop.view.View.searchForCustomer(View.java:94)
+	at se.kth.iv1350.repairshop.view.View.alternateFlow(View.java:179)
+	at se.kth.iv1350.repairshop.startup.Main.main(Main.java:40)
+2026-05-14T16:55:02.497409, Exception thrown
+se.kth.iv1350.repairshop.controller.OperationFailedException: Cannot access customer database server
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:63)
+	at se.kth.iv1350.repairshop.view.View.searchForCustomer(View.java:94)
+	at se.kth.iv1350.repairshop.view.View.alternateFlow(View.java:183)
+	at se.kth.iv1350.repairshop.startup.Main.main(Main.java:40)
+Caused by: se.kth.iv1350.repairshop.integration.DatabaseFailureException: Cannot access customer database server
+	at se.kth.iv1350.repairshop.integration.CustomerRegistry.findCustomer(CustomerRegistry.java:45)
+	at se.kth.iv1350.repairshop.controller.Controller.retrieveCustomerInfo(Controller.java:60)
+	... 3 more
