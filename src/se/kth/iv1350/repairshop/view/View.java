@@ -94,7 +94,7 @@ public class View {
             contr.retrieveCustomerInfo(phoneNumber);
 
         } catch (CustomerNotFoundException exc) {
-            errorMessageHandler.showErrorMsg("No customer with phone number: " + exc.getMessage() + " could be found");
+            errorMessageHandler.showErrorMsg(exc.getMessage());
             logger.logException(exc);
 
         } catch (Exception exc) {
