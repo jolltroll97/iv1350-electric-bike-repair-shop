@@ -33,7 +33,7 @@ public class OrderHandler {
     public void orderAccepted(RepairOrderDTO selectedRepairOrder) {
         // Update order state to "Accepted" and persist
         RepairOrderDTO acceptedOrder = createUpdatedOrder(selectedRepairOrder, "Accepted");
-        printer.printRepairOrder(acceptedOrder);
+        printer.printRepairOrderFinal(acceptedOrder);
         repairOrderRegistry.updateRepairOrderState(acceptedOrder, "Accepted");
     }
 

@@ -36,7 +36,7 @@ public class Main {
         repairOrderRegistry.addObserver(new RepairOrderView());
         repairOrderRegistry.addObserver(new RepairOrderLogger());
         
-        //view.sampleExecution();
+        view.sampleExecution();
         view.alternateFlow();
         }
 

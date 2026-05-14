@@ -189,7 +189,7 @@ public class View {
 
         // --- Hjälpmetoder för snygg formatering ---
 
-    private void printCustomer(CustomerDTO customer) {
+        private void printCustomer(CustomerDTO customer) {
         out.println("Customer Name: " + customer.getName());
         out.println("Phone: " + customer.getPhoneNum());
         out.println("Email: " + customer.getEmail());
@@ -214,6 +214,7 @@ public class View {
             printDiagnosticReport(order.getReportDTO());
         }
     }
+    
 
     private void printRepairTasks(List<RepairTaskDTO> tasks) {
         for (RepairTaskDTO task : tasks) {
