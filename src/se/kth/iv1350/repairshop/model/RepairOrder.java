@@ -86,7 +86,7 @@ public class RepairOrder {
         RepairOrderDTO updatedOrder = new RepairOrderDTO(
             reportDTO,
             oldOrder.getDate(),
-            oldOrder.getTotalCost(), 
+            calculateTotal(reportDTO.getRepairTasksList()),
             oldOrder.getRepairReport(),
             oldOrder.getState(),
             oldOrder.getCustomer(),
