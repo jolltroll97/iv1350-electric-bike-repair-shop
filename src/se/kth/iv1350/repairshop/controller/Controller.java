@@ -24,8 +24,6 @@ public class Controller {
     private final OrderHandler orderHandler;
     private final RepairOrder repairOrder;
 
-    private int currentRepairOrder;
-
     /**
      * Creates a new instance of the Controller.
      * 
@@ -60,11 +58,7 @@ public class Controller {
      */
     public int createRepairOrder(CustomerDTO customer, int date, String repairReport){
         
-        int newOrderId = this.repairOrderRegistry.createRepairOrder(customer, date, repairReport);
-
-        this.currentRepairOrder = newOrderId;
-
-        return newOrderId;
+        return this.repairOrderRegistry.createRepairOrder(customer, date, repairReport);
 
     }
 
