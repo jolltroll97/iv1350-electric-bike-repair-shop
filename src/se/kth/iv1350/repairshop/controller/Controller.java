@@ -29,8 +29,6 @@ public class Controller {
     private final OrderHandler orderHandler;
     private final RepairOrder repairOrder;
 
-    private int currentRepairOrder;
-
     /**
      * Creates a new instance of the Controller.
      * 
@@ -73,11 +71,7 @@ public class Controller {
      */
     public int createRepairOrder(CustomerDTO customer, int date, String repairReport){
         
-        int newOrderId = this.repairOrderRegistry.createRepairOrder(customer, date, repairReport);
-
-        this.currentRepairOrder = newOrderId;
-
-        return newOrderId;
+        return this.repairOrderRegistry.createRepairOrder(customer, date, repairReport);
 
     }
 
@@ -110,7 +104,7 @@ public class Controller {
      * This is done after each repair task that is to be added.
      * 
      * @param reportDTO     The diagnostic report to be added to the repair order.
-     * @param repairOrderId The ID of the repair report that is to be updated.              
+     * @param repairOrderId The ID of the repair report that is to be updated.
      */
     public void updateRepairOrder(DiagnosticReportDTO reportDTO, int repairOrderId){
         
@@ -149,8 +143,8 @@ public class Controller {
      *                              (chosen from the list returned from "getByPhoneNum")
      */
     public void customerResponse(boolean response, RepairOrderDTO selectedRepairOrder){
-      
-            orderHandler.orderAccepted(selectedRepairOrder);
+
+        orderHandler.orderAccepted(selectedRepairOrder);
         
     }
 
